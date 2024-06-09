@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Mehdi Mansour">
+
+<title>Projet Modèlisation Linéaires</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="prediction_ozone_files/libs/clipboard/clipboard.min.js"></script>
+<script src="prediction_ozone_files/libs/quarto-html/quarto.js"></script>
+<script src="prediction_ozone_files/libs/quarto-html/popper.min.js"></script>
+<script src="prediction_ozone_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="prediction_ozone_files/libs/quarto-html/anchor.min.js"></script>
+<link href="prediction_ozone_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="prediction_ozone_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="prediction_ozone_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="prediction_ozone_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="prediction_ozone_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Projet Modèlisation Linéaires</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Mehdi Mansour </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction :</h2>
+<p>La pollution de l’air est un enjeu majeur, économique, de santé publique et de préservation de l’environnement. Parmi les différents polluants atmosphériques, l’ozone (O3) occupe une place particulière en raison de ses effets néfastes sur la santé humaine, les écosystèmes et les matériaux. La concentration de l’ozone dans l’atmosphère est le résultat d’un équilibre complexe entre la production et la destruction de ce gaz, impliquant de nombreux facteurs, notamment d’autres polluants et les conditions météorologiques.</p>
+<p>Dans ce travail, nous nous intéressons à la modélisation prédictive de la concentration de l’ozone dans la troposphère en fonction de différents polluants atmosphériques et des conditions météorologiques. Plus précisément, notre objectif est de développer un modèle capable de prédire la concentration en ozone à partir de variables telles que les concentrations de polluants primaires (les oxydes d’Azote et les particules fines) et des paramètres météorologiques (température, humidité relative..).</p>
+<p>Cette approche s’appuie sur des données de qualité de l’air et de météorologie provenant de la station de surveillance située a <strong>Albertville</strong> en région Rhône-Alpes. Les modèles proposés se verront diagnostiqués et évalués sur leurs performances en utilisant les outils vus en cours. Nous discuterons également de l’importance relative des différentes variables indépendantes et de leur contribution à la prédiction.</p>
+<p>En somme, ce travail vise à améliorer notre compréhension des phénomènes d’accumulation de l’ozone dans les couches basses de l’atmosphère, en mettant en application les techniques statistiques de la modélisation linéaire multivariée.</p>
+</section>
+<section id="construction-et-prétraitement-des-sets-de-travail" class="level2">
+<h2 class="anchored" data-anchor-id="construction-et-prétraitement-des-sets-de-travail">Construction et prétraitement des sets de travail :</h2>
+<p>Le(s) dataset(s) qui serviront à la modélisation sont contruits à partir de données brutes des polluants de la station de surveillance d’Albertville. Cette station est choisie car elle offre des données variées et de qualité, en effet cinq polluants atmosphériques sont mesurés avec un taux de panne (des appareils de mesure) très bas et taux de validation haut. Il en est de même pour les données brutes métérologiques, sauf pour le 11 et le 12 février, qui ont été imputés de la station la plus proche “Aillon-le-vieux” car absents sur les mesures de la station d’origine. La distance entre les deux stations étant suffisamment faible pour garder une approximation viable.</p>
+<p>Dans la pratique, ces données ont été extraites semaine par semaine, sur treize cycles couvrant du “01/01/2023 au 01/04/2023. Le premier avril est inclus afin de garder la cyclicité des 7 jours, ce cycle pouvant potentiellement intervenir dans la prédiction.</p>
+<p>La ville d’albertville n’est pas située dans une région à industrie chimique. Ni concernée par un trafic routier pouvant significativement influencer notre prédiction.</p>
+<p>Les données brutes sur les polluants comportent une mesure toutes les heures, tandis que celles de la météo une mesure toutes les 10 mn.</p>
+<p>les mesures de polluant auxquelles nous allons nous intérresser sont :</p>
+<ul>
+<li><p>La concentration atmosphérique de l’ozone : O3, en µg/m3.</p></li>
+<li><p>La concentration atmosphérique du monxyde d’azote : NO, en µg/m3.</p></li>
+<li><p>La concentration atmosphérique du dioxyde d’azote : NO2, en µg/m3.</p></li>
+<li><p>La concentration en particules fines de diamètre inférieur à 2.5 µm : PM<sub>2.5</sub> , en µg/m3.</p></li>
+<li><p>La concentration en particules fines de diamètre inférieur à 10 µm : PM<sub>10</sub> , en µg/m3.</p></li>
+</ul>
+<p>Les mesures météorologiques auxquelles nous allons nous intérresser sont :</p>
+<ul>
+<li><p>La température : en degrés celsius.</p></li>
+<li><p>L’humidité : en pourcentage de saturation de l’air ambiant.</p></li>
+<li><p>La pression atmosphérique : en hectopsacal.</p></li>
+<li><p>La vitesse du vent : en km/h.</p></li>
+<li><p>La direction du vent : en degrés , dans le sens trigonométrique.</p></li>
+<li><p>Les précipitations : en mm/m2 , sur la denière heure, ou denières trois heures.</p></li>
+</ul>
+<p>La construction de nos datasets de travail se fait ensuite en plusieurs étapes en gardant en tête nos objectifs : avoir un maximum de données fiables, sur des variables impliquées potentiellement dans la hausse ou la baisse du taux d’ozone dans l’air.</p>
+<p>On commençe par récupérer les données météo, en faisant attention à bien donner le type “date” à la colonne des dates, cette colonne est importante car c’est l’identifiant pour fusionner avec d’autres données :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>d.meteo <span class="ot">=</span> <span class="fu">read_excel</span>(<span class="st">"meteo_albertville_2023-01-01_2023-04-01.xls"</span>,</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                     </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">col_types =</span> <span class="fu">c</span>(<span class="st">"text"</span>, <span class="st">"date"</span>, <span class="st">"numeric"</span>, </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                                    </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"numeric"</span>, <span class="st">"numeric"</span>, <span class="st">"numeric"</span>, </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                                    </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>                                     <span class="st">"numeric"</span>, <span class="st">"numeric"</span>, <span class="st">"numeric"</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>                                    </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"numeric"</span>, <span class="st">"numeric"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Ces données comportent des mesures toutes les 10 minutes et des colonnes non utiles. Nous ne gardons qu’une mesure toutes les heures, et les colonnes susceptibles de nous éclairer.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>d.meteo <span class="ot">=</span> d.meteo[<span class="fu">grepl</span>(<span class="st">"00:00$"</span>, d.meteo<span class="sc">$</span>dh_utc), <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">9</span>,<span class="dv">11</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>On récupère ensuite les données sur les polluants atmosphériques, en chargeant les cinq fichiers à notre disposition :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>d.ozone <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"ozone_Albertville_2023-01-01_2023-04-01.csv"</span>, </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                   </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">col_types =</span> <span class="fu">c</span>(<span class="st">"T"</span>, <span class="st">"numeric"</span>, <span class="st">"text"</span>))</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>d.PM2<span class="fl">.5</span> <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">"particules PM2,5_Albertville_2023-01-01_2023-04-01.csv"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>d.PM10  <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">"particules PM10_Albertville_2023-01-01_2023-04-01.csv"</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>d.NO2   <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">"dioxyde d'azote_Albertville_2023-01-01_2023-04-01.csv"</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>d.NO    <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">"monoxyde d'azote_Albertville_2023-01-01_2023-04-01.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>bIl est légitime de penser que la concentration atmosphérique passée d’un polluant puisse influencer sa concentration future. Dans l’objectif de vérifier cette hypothèse, une colonne des mesures à j-1 est construite pour chaque polluant :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>d.ozone.lag <span class="ot">=</span> <span class="fu">data.frame</span>(dplyr<span class="sc">::</span><span class="fu">lag</span>(d.ozone<span class="sc">$</span>ozone..µg.m.., <span class="dv">24</span>)) </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>d.PM2.<span class="fl">5.</span>lag <span class="ot">=</span> <span class="fu">data.frame</span>(dplyr<span class="sc">::</span><span class="fu">lag</span>(d.PM2<span class="fl">.5</span><span class="sc">$</span>particules.PM2.<span class="dv">5</span>..µg.m.., <span class="dv">24</span>))</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>d.PM10.lag  <span class="ot">=</span> <span class="fu">data.frame</span>(dplyr<span class="sc">::</span><span class="fu">lag</span>(d.PM10<span class="sc">$</span>particules.PM10..µg.m.., <span class="dv">24</span>))</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>d.NO2.lag   <span class="ot">=</span> <span class="fu">data.frame</span>(dplyr<span class="sc">::</span><span class="fu">lag</span>(d.NO2<span class="sc">$</span>dioxyde.d.azote..µg.m.., <span class="dv">24</span>))</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>d.NO.lag    <span class="ot">=</span> <span class="fu">data.frame</span>(dplyr<span class="sc">::</span><span class="fu">lag</span>(d.NO<span class="sc">$</span>monoxyde.d.azote..µg.m.., <span class="dv">24</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>On fusionne ensuite toutes les colonnes relatives aux polluants et on les nomme :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>d.polluants    <span class="ot">=</span>    <span class="fu">cbind</span>(d.ozone[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                          d.ozone.lag ,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                          d.NO[,<span class="dv">2</span>],</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                          d.NO.lag ,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                          d.NO2[,<span class="dv">2</span>],</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                          d.NO2.lag,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>                          d.PM2<span class="fl">.5</span>[,<span class="dv">2</span>],</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                          d.PM2.<span class="fl">5.</span>lag ,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                          d.PM10[,<span class="dv">2</span>],</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>                          d.PM10.lag)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(d.polluants) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"datetime"</span>, </span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"ozone"</span>, </span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"ozone_lag"</span>, </span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"no"</span>,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"no_lag"</span>, </span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"no2"</span>,</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"no2_lag"</span>, </span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"pm2.5"</span>,</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"pm2.5_lag"</span>,</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"pm10"</span>,</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>                          <span class="st">"pm10_lag"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>On fusionne le résultat avec les données météo, en nous servant de la date et heure de la mesure comme clef d’identification de la ligne :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> <span class="fu">merge</span>(d.polluants, d.meteo, <span class="at">by.x =</span> <span class="st">"datetime"</span>, <span class="at">by.y =</span> <span class="st">"dh_utc"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Dans l’hypothèse d’une cyclicité hebdomadaire, ou d’une influence du jour de la semaine sur la prédiction, on rajoute une colonne spécifiant le jour de la semaine pour chaque mesure. Cette information est implicite dans la date, elle en est explicitée avec la fonction weekdays() :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> data <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">weekday =</span> <span class="fu">weekdays</span>(datetime))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>La nouvelle colonne doit ensuite être encodée en factor, en tant que variable catégorielle ayant 7 modalités :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>weekday <span class="ot">=</span> <span class="fu">as.factor</span>(data<span class="sc">$</span>weekday)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Le set de données obtenu comporte des valeurs manquantes, néanmoins nous avons deux indications pour faire une choix de travail:</p>
+<ul>
+<li><p>Le taux de valeurs manquantes est inférieur à 2 %, soit un taux très bas.</p></li>
+<li><p>L’absence de de ces valeurs est totalement due au hasard ( MCAR ).</p></li>
+</ul>
+<p>Le choix de supprimer les lignes concernées n’entrainera donc pas de biais, ni de perte significative de l’information :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> <span class="fu">na.omit</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Nous partitionnons ensuite ces données en deux set :</p>
+<ul>
+<li><p>Un set pour entrainer le modèle : 80 % des lignes</p></li>
+<li><p>Un set pour tester la viabilité du modèle : 20 % des lignes</p></li>
+</ul>
+<p>Cela nous permettera d’évaluer plus tard la justesse des prédiction et de détecter potentiellement des problèmes d’under ou overfitting .</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>nrows.training <span class="ot">=</span> <span class="fu">floor</span>(<span class="fl">0.8</span> <span class="sc">*</span> <span class="fu">nrow</span>(data))</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>training.indices <span class="ot">=</span> <span class="fu">sample</span>(<span class="fu">seq_len</span>(<span class="fu">nrow</span>(data)), <span class="at">size =</span> nrows.training)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>training.set <span class="ot">=</span> data[training.indices, ]</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>testing.set  <span class="ot">=</span> data[<span class="sc">-</span>training.indices, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Nous disposons désormais de deux jeux de données qui vont nous accompagner dans le reste du travail. Nous les sauvegardons en local, pour en disposer sans avoir à refaire toutes les opérations précédentes :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(training.set, <span class="at">file =</span> <span class="st">"training_set.RData"</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(testing.set, <span class="at">file =</span> <span class="st">"testing_set.RData"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="description-et-visualisation-des-données" class="level2">
+<h2 class="anchored" data-anchor-id="description-et-visualisation-des-données">Description et visualisation des données :</h2>
+<p>Disposant désormais d’un jeu de données nettoyé et prêt à l’emploi, le prochain pas est d’essayer de le comprendre et de détecter la nature des relations entre les variables, soit formellement soit par intuition graphique.</p>
+<p>Le jeu de donnée se présente ainsi :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(training.set[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 5%">
+<col style="width: 22%">
+<col style="width: 6%">
+<col style="width: 11%">
+<col style="width: 5%">
+<col style="width: 8%">
+<col style="width: 5%">
+<col style="width: 9%">
+<col style="width: 6%">
+<col style="width: 11%">
+<col style="width: 5%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">datetime</th>
+<th style="text-align: right;">ozone</th>
+<th style="text-align: right;">ozone_lag</th>
+<th style="text-align: right;">no</th>
+<th style="text-align: right;">no_lag</th>
+<th style="text-align: right;">no2</th>
+<th style="text-align: right;">no2_lag</th>
+<th style="text-align: right;">pm2.5</th>
+<th style="text-align: right;">pm2.5_lag</th>
+<th style="text-align: right;">pm10</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1470</td>
+<td style="text-align: left;">2023-03-05 05:00:00</td>
+<td style="text-align: right;">17.4</td>
+<td style="text-align: right;">23.0</td>
+<td style="text-align: right;">1.3</td>
+<td style="text-align: right;">0.7</td>
+<td style="text-align: right;">13.4</td>
+<td style="text-align: right;">19.2</td>
+<td style="text-align: right;">39.7</td>
+<td style="text-align: right;">56.1</td>
+<td style="text-align: right;">43.8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">675</td>
+<td style="text-align: left;">2023-01-30 01:00:00</td>
+<td style="text-align: right;">16.9</td>
+<td style="text-align: right;">26.0</td>
+<td style="text-align: right;">1.7</td>
+<td style="text-align: right;">1.5</td>
+<td style="text-align: right;">23.5</td>
+<td style="text-align: right;">18.3</td>
+<td style="text-align: right;">30.9</td>
+<td style="text-align: right;">21.2</td>
+<td style="text-align: right;">33.9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1040</td>
+<td style="text-align: left;">2023-02-14 20:00:00</td>
+<td style="text-align: right;">16.9</td>
+<td style="text-align: right;">16.4</td>
+<td style="text-align: right;">7.0</td>
+<td style="text-align: right;">6.6</td>
+<td style="text-align: right;">48.7</td>
+<td style="text-align: right;">46.6</td>
+<td style="text-align: right;">13.1</td>
+<td style="text-align: right;">14.6</td>
+<td style="text-align: right;">27.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2072</td>
+<td style="text-align: left;">2023-03-30 09:00:00</td>
+<td style="text-align: right;">8.5</td>
+<td style="text-align: right;">66.6</td>
+<td style="text-align: right;">13.4</td>
+<td style="text-align: right;">1.7</td>
+<td style="text-align: right;">32.1</td>
+<td style="text-align: right;">11.6</td>
+<td style="text-align: right;">17.4</td>
+<td style="text-align: right;">4.2</td>
+<td style="text-align: right;">52.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">850</td>
+<td style="text-align: left;">2023-02-06 09:00:00</td>
+<td style="text-align: right;">11.6</td>
+<td style="text-align: right;">6.7</td>
+<td style="text-align: right;">12.5</td>
+<td style="text-align: right;">15.3</td>
+<td style="text-align: right;">38.3</td>
+<td style="text-align: right;">25.7</td>
+<td style="text-align: right;">11.0</td>
+<td style="text-align: right;">10.3</td>
+<td style="text-align: right;">19.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">34</td>
+<td style="text-align: left;">2023-01-02 09:00:00</td>
+<td style="text-align: right;">20.1</td>
+<td style="text-align: right;">5.7</td>
+<td style="text-align: right;">4.4</td>
+<td style="text-align: right;">7.8</td>
+<td style="text-align: right;">20.0</td>
+<td style="text-align: right;">13.8</td>
+<td style="text-align: right;">4.1</td>
+<td style="text-align: right;">6.0</td>
+<td style="text-align: right;">8.9</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(training.set[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>,<span class="dv">11</span><span class="sc">:</span><span class="dv">15</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 6%">
+<col style="width: 11%">
+<col style="width: 20%">
+<col style="width: 16%">
+<col style="width: 20%">
+<col style="width: 24%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">pm10_lag</th>
+<th style="text-align: right;">temperature_degC</th>
+<th style="text-align: right;">pression_hPa</th>
+<th style="text-align: right;">humidite_percent</th>
+<th style="text-align: right;">point_de_rosee_degC</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1470</td>
+<td style="text-align: right;">61.6</td>
+<td style="text-align: right;">-1.4</td>
+<td style="text-align: right;">1017.9</td>
+<td style="text-align: right;">95</td>
+<td style="text-align: right;">-2.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">675</td>
+<td style="text-align: right;">22.6</td>
+<td style="text-align: right;">-5.9</td>
+<td style="text-align: right;">1028.2</td>
+<td style="text-align: right;">92</td>
+<td style="text-align: right;">-7.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1040</td>
+<td style="text-align: right;">25.8</td>
+<td style="text-align: right;">3.1</td>
+<td style="text-align: right;">1032.8</td>
+<td style="text-align: right;">74</td>
+<td style="text-align: right;">-1.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2072</td>
+<td style="text-align: right;">12.2</td>
+<td style="text-align: right;">10.9</td>
+<td style="text-align: right;">1020.1</td>
+<td style="text-align: right;">79</td>
+<td style="text-align: right;">7.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">850</td>
+<td style="text-align: right;">14.5</td>
+<td style="text-align: right;">-1.9</td>
+<td style="text-align: right;">1033.3</td>
+<td style="text-align: right;">94</td>
+<td style="text-align: right;">-2.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">34</td>
+<td style="text-align: right;">9.4</td>
+<td style="text-align: right;">10.1</td>
+<td style="text-align: right;">1024.4</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">2.7</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(training.set[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>,<span class="dv">16</span><span class="sc">:</span><span class="dv">19</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">vent_moyen_kmH</th>
+<th style="text-align: right;">vent_direction_degres</th>
+<th style="text-align: right;">pluie_1h_mm</th>
+<th style="text-align: left;">weekday</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1470</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">148</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">dimanche</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">675</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">187</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">lundi</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">1040</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">157</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">mardi</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2072</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">354</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">jeudi</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">850</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">165</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">lundi</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">34</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">244</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">lundi</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Le jeu comporte actuellement 19 colonnes de données pour 1674 lignes de trainning.</p>
+<p>Il est possible d’avoir une description statistique des différentes variables :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(training.set)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    datetime                          ozone          ozone_lag     
+ Min.   :2023-01-02 00:00:00.00   Min.   :  2.60   Min.   :  2.60  
+ 1st Qu.:2023-01-25 06:15:00.00   1st Qu.: 17.70   1st Qu.: 17.12  
+ Median :2023-02-17 07:30:00.00   Median : 34.30   Median : 32.85  
+ Mean   :2023-02-16 17:15:22.57   Mean   : 37.21   Mean   : 36.37  
+ 3rd Qu.:2023-03-11 11:45:00.00   3rd Qu.: 54.70   3rd Qu.: 53.70  
+ Max.   :2023-04-01 23:00:00.00   Max.   :102.40   Max.   :102.40  
+                                                                   
+       no             no_lag            no2           no2_lag     
+ Min.   : 0.200   Min.   : 0.200   Min.   : 1.20   Min.   : 1.20  
+ 1st Qu.: 0.900   1st Qu.: 1.000   1st Qu.:11.00   1st Qu.:11.20  
+ Median : 1.900   Median : 1.900   Median :18.40   Median :18.55  
+ Mean   : 4.871   Mean   : 5.002   Mean   :21.12   Mean   :21.24  
+ 3rd Qu.: 4.800   3rd Qu.: 5.000   3rd Qu.:28.60   3rd Qu.:29.00  
+ Max.   :55.600   Max.   :55.600   Max.   :71.10   Max.   :71.10  
+                                                                  
+     pm2.5         pm2.5_lag          pm10          pm10_lag    
+ Min.   : 0.50   Min.   : 0.50   Min.   : 1.30   Min.   : 1.30  
+ 1st Qu.: 5.50   1st Qu.: 5.70   1st Qu.: 8.90   1st Qu.: 9.30  
+ Median :11.25   Median :11.50   Median :16.70   Median :16.90  
+ Mean   :13.45   Mean   :13.63   Mean   :19.18   Mean   :19.45  
+ 3rd Qu.:18.30   3rd Qu.:18.60   3rd Qu.:26.77   3rd Qu.:27.00  
+ Max.   :56.10   Max.   :56.10   Max.   :70.90   Max.   :71.60  
+                                                                
+ temperature_degC   pression_hPa    humidite_percent point_de_rosee_degC
+ Min.   :-11.500   Min.   : 988.4   Min.   : 36.00   Min.   :-12.5000   
+ 1st Qu.: -0.900   1st Qu.:1014.3   1st Qu.: 77.00   1st Qu.: -3.1000   
+ Median :  2.800   Median :1020.2   Median : 87.00   Median :  0.6000   
+ Mean   :  2.885   Mean   :1021.0   Mean   : 83.85   Mean   :  0.2146   
+ 3rd Qu.:  6.300   3rd Qu.:1029.5   3rd Qu.: 94.00   3rd Qu.:  3.8000   
+ Max.   : 17.600   Max.   :1040.4   Max.   :100.00   Max.   : 10.0000   
+                                                                        
+ vent_moyen_kmH  vent_direction_degres  pluie_1h_mm          weekday   
+ Min.   :0.000   Min.   :  0           Min.   : 0.0000   dimanche:222  
+ 1st Qu.:0.000   1st Qu.:152           1st Qu.: 0.0000   jeudi   :245  
+ Median :1.000   Median :175           Median : 0.0000   lundi   :246  
+ Mean   :0.975   Mean   :181           Mean   : 0.1534   mardi   :230  
+ 3rd Qu.:1.000   3rd Qu.:216           3rd Qu.: 0.0000   mercredi:256  
+ Max.   :7.200   Max.   :359           Max.   :11.8000   samedi  :225  
+                                                         vendredi:250  </code></pre>
+</div>
+</div>
+<p>Ce résumé de statistiques descriptives permet de nous rassurer sur la structure du jeu, il n’y a pas a priori de valeurs aberrantes sautant aux yeux. Et la construction des colonnes dérivées semble avoir bien fonctionné.</p>
+<p>Jetons un oeil aux liens entre les variables, en nous fiant au coefficient de corrélation , et à la distribution de chaque variable en fonction des autres.</p>
+<p>Considérons d’abord l’ozone par rapport aux autres polluants atmosphériques :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(training.set[, <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">8</span>,<span class="dv">10</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="prediction_ozone_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>La concentration de l’ozone semble fortement et négativement corrélée à celle du dioxyde d’azote.</p>
+<p>La distribution de l’ozone par rapport aux autres polluants semble suivre un motif en particulier pour le monoxyde et dioxyde d’azote.</p>
+<p>De même pour les concentrations des polluants la veille de la mesure considérée :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(training.set[, <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">7</span>,<span class="dv">9</span>,<span class="dv">11</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="prediction_ozone_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Sans surprise, nous pouvons constater que la concentration de l’ozone est fortement et positivement corrélée à sa concentration 24 h avant.</p>
+<p>Considérons maintenant l’ozone par rapport aux conditions météo :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(training.set[, <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">12</span>,<span class="dv">13</span>,<span class="dv">14</span>,<span class="dv">16</span>,<span class="dv">17</span>,<span class="dv">18</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="prediction_ozone_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>La concentration de l’ozone semble positivement corrélée à la température et négativement à l’humidité.</p>
+<p>La distribution de la direction du vent est apriori indépendante de la concentration d’ozone.</p>
+<p>Essayons d’explorer le lien entre la concentration de l’ozone et le jour de la semaine, pour détecter éventuellement un effet de l’activité humaine (trafic routier par exemple) sur sa concentration :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(training.set[, <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">19</span>)], <span class="fu">aes</span>(<span class="at">color=</span>weekday))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="prediction_ozone_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>La distribution de la concentration d’ozone semble être affectée par le jour de la semaine.</p>
+<p>La prise en considération du coefficient de corrélation de Pearson, ainsi que les constatations graphiques, nous permettent de ne pas rejeter d’emblée la modélisation linéaire comme outil possible de prédiction de la concentration de l’ozone en fonction de ces variables.</p>
+<p>C’est ce que nous tâcherons de faire au mieux dans la suite.</p>
+</section>
+<section id="exploration-vers-un-modèle-pertinent" class="level2">
+<h2 class="anchored" data-anchor-id="exploration-vers-un-modèle-pertinent">Exploration vers un modèle pertinent :</h2>
+<p>Les données dont nous disposons n’ont pas la même unité de mesure, ainsi que des moyennes et variances différentes. Nous commençons par centrer-reduire les données que nous allons exploiter dans la modélisation :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># on stocke dans dtcr ( data training centrée réduite) les données d'entrainement centrées réduites</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>dtcr <span class="ot">=</span> data.table<span class="sc">::</span><span class="fu">copy</span>(training.set)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>moyennes <span class="ot">=</span> <span class="fu">apply</span>(dtcr[ ,<span class="dv">2</span><span class="sc">:</span><span class="dv">18</span>], <span class="dv">2</span>, mean)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>ecarts_types_biaisés <span class="ot">=</span> <span class="fu">apply</span>(dtcr[ ,<span class="dv">2</span><span class="sc">:</span><span class="dv">18</span>], <span class="dv">2</span>, sd) <span class="sc">*</span> (<span class="fu">sqrt</span>(<span class="dv">1673</span><span class="sc">/</span><span class="dv">1674</span>))</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>centree <span class="ot">=</span> <span class="fu">sweep</span>(dtcr[ , <span class="dv">2</span><span class="sc">:</span><span class="dv">18</span>], <span class="dv">2</span>, moyennes, <span class="st">"-"</span>)</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>centree_reduite <span class="ot">=</span> <span class="fu">sweep</span>(centree, <span class="dv">2</span>, ecarts_types_biaisés, <span class="st">"/"</span>)</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>dtcr[ , <span class="dv">2</span><span class="sc">:</span><span class="dv">18</span>] <span class="ot">=</span> centree_reduite</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Notons que lors de cette normalisation , nous gardons les données de moyenne et d’écart type du set de training, pour les appliquer au centrage-reduction des données de testing plus tard.</p>
+<p>Une première modélisation avec toutes les variables est réalisée afin d’avoir un premier aperçu de leurs significativité dans la prédiction :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>lmod_0 <span class="ot">=</span> <span class="fu">lm</span>(ozone<span class="sc">~</span>., <span class="at">data =</span> dtcr[, <span class="dv">2</span><span class="sc">:</span><span class="dv">18</span>]) <span class="co"># colonne datetime non incluse</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmod_0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = ozone ~ ., data = dtcr[, 2:18])
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.52747 -0.24931 -0.01619  0.23065  1.33861 
+
+Coefficients:
+                        Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)            5.944e-16  9.575e-03   0.000  1.00000    
+ozone_lag              6.598e-01  1.519e-02  43.438  &lt; 2e-16 ***
+no                     1.194e-02  1.492e-02   0.800  0.42366    
+no_lag                -3.578e-02  1.486e-02  -2.408  0.01616 *  
+no2                   -6.117e-01  1.779e-02 -34.384  &lt; 2e-16 ***
+no2_lag                4.511e-01  1.932e-02  23.347  &lt; 2e-16 ***
+pm2.5                 -4.764e-02  3.479e-02  -1.369  0.17104    
+pm2.5_lag             -4.828e-03  3.246e-02  -0.149  0.88178    
+pm10                  -1.744e-01  3.259e-02  -5.353 9.86e-08 ***
+pm10_lag               1.428e-01  2.856e-02   4.999 6.37e-07 ***
+temperature_degC      -4.924e-01  1.696e-01  -2.903  0.00375 ** 
+pression_hPa          -9.418e-02  1.094e-02  -8.613  &lt; 2e-16 ***
+humidite_percent      -4.234e-01  8.246e-02  -5.135 3.15e-07 ***
+point_de_rosee_degC    3.739e-01  1.500e-01   2.493  0.01278 *  
+vent_moyen_kmH        -5.449e-03  1.042e-02  -0.523  0.60117    
+vent_direction_degres  2.441e-02  9.730e-03   2.509  0.01221 *  
+pluie_1h_mm            5.183e-02  1.028e-02   5.041 5.15e-07 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.3918 on 1657 degrees of freedom
+Multiple R-squared:  0.8481,    Adjusted R-squared:  0.8466 
+F-statistic: 578.1 on 16 and 1657 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>On constate que les residuals semblent être normalement distribuées de part et d’autre de leur médiane. La normalité des residus sera vérifié avec les bons outils sur le modèle choisi, pour l’instant la statistique descriptive permet juste de donner une indication rassurante.</p>
+<p>L’hypothèse qu’aucune des variables prédictives ne puisse participer à expliquer la variable à prédire est rejetée avec une p-value infiniment petite.</p>
+<p>Le nombre de variables prédictives est néanmoins élevé et avec des significativités inégales. Une stratégie backwards peut être mise en oeuvre pour ajuster un fit et éliminer pas à pas les variables les moins significatives.</p>
+<p>Dans un but de reproductibilité et de concision, je propose la fonction suivante pour réaliser cette élimination :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspirée du TD 6 , et du cours de la programmation objet</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>backwards <span class="ot">=</span> <span class="cf">function</span>(model, alpha){</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>   resultat <span class="ot">=</span> model</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>   condition <span class="ot">=</span> <span class="cn">TRUE</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>   <span class="cf">while</span> (condition) {</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>     sommaire <span class="ot">=</span> <span class="fu">summary</span>(resultat)</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>     pvals <span class="ot">=</span> sommaire<span class="sc">$</span>coefficients[,<span class="dv">4</span>]</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>     nom_colonne <span class="ot">=</span> <span class="fu">names</span>(<span class="fu">sort</span>(pvals[pvals <span class="sc">&gt;</span> alpha], <span class="at">decreasing =</span> <span class="cn">TRUE</span>)[<span class="dv">1</span>])</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>     condition <span class="ot">=</span> (<span class="fu">is.na</span>(nom_colonne)<span class="sc">==</span><span class="cn">FALSE</span>)</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>     <span class="cf">if</span> (condition){</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>       <span class="cf">if</span> (nom_colonne <span class="sc">==</span> <span class="st">"(Intercept)"</span>){nom_colonne <span class="ot">=</span> <span class="dv">1</span> }</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>       formule <span class="ot">=</span> <span class="fu">paste0</span>(<span class="st">". ~ . - "</span>,nom_colonne)</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>       resultat <span class="ot">=</span> <span class="fu">update</span>(resultat, formule)</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>     }</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>   }</span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>   <span class="fu">return</span>(resultat)</span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Cette fonction prend en argument le modèle contenant toutes les variables, ainsi qu’un seuil de significativité alpha. Elle retourne un modèle prenant en compte que les variables respectant le seuil de significativité imposé, après avoir éliminé dans l’ordre les variables respectant le moins ce seuil.</p>
+<p>Essayons à présent avec un seuil alpha = 0.05 :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">=</span> <span class="fl">0.05</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>lmod_1 <span class="ot">=</span> <span class="fu">backwards</span>(lmod_0, alpha)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmod_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = ozone ~ ozone_lag + no_lag + no2 + no2_lag + pm10 + 
+    pm10_lag + temperature_degC + pression_hPa + humidite_percent + 
+    point_de_rosee_degC + vent_direction_degres + pluie_1h_mm - 
+    1, data = dtcr[, 2:18])
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.46940 -0.24731 -0.01579  0.23719  1.34133 
+
+Coefficients:
+                       Estimate Std. Error t value Pr(&gt;|t|)    
+ozone_lag              0.661710   0.014752  44.855  &lt; 2e-16 ***
+no_lag                -0.026041   0.012606  -2.066  0.03901 *  
+no2                   -0.603564   0.015391 -39.214  &lt; 2e-16 ***
+no2_lag                0.449682   0.018641  24.123  &lt; 2e-16 ***
+pm10                  -0.214000   0.016121 -13.275  &lt; 2e-16 ***
+pm10_lag               0.130740   0.015759   8.296  &lt; 2e-16 ***
+temperature_degC      -0.521234   0.166740  -3.126  0.00180 ** 
+pression_hPa          -0.093842   0.010782  -8.703  &lt; 2e-16 ***
+humidite_percent      -0.442864   0.080238  -5.519 3.94e-08 ***
+point_de_rosee_degC    0.407395   0.146746   2.776  0.00556 ** 
+vent_direction_degres  0.022908   0.009647   2.375  0.01768 *  
+pluie_1h_mm            0.050662   0.010219   4.958 7.86e-07 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.3916 on 1662 degrees of freedom
+Multiple R-squared:  0.8477,    Adjusted R-squared:  0.8466 
+F-statistic: 771.2 on 12 and 1662 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>Cette première modélisation garde une douzaine de variables pour un coefficient de determination honorable de 0.84.</p>
+<p>En baissant le risque de premier espèce alpha à 0.0001, c’est à dire en baissant le risque de garder une variable alors que son coefficient serait nul, nous obtenons :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">=</span> <span class="fl">0.0001</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>lmod_2 <span class="ot">=</span> <span class="fu">backwards</span>(lmod_0, alpha)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmod_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = ozone ~ ozone_lag + no2 + no2_lag + pm10 + pm10_lag + 
+    temperature_degC + pression_hPa + humidite_percent + pluie_1h_mm - 
+    1, data = dtcr[, 2:18])
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.47014 -0.24957 -0.01708  0.23718  1.36717 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(&gt;|t|)    
+ozone_lag         0.66991    0.01462  45.835  &lt; 2e-16 ***
+no2              -0.60603    0.01543 -39.272  &lt; 2e-16 ***
+no2_lag           0.44051    0.01757  25.071  &lt; 2e-16 ***
+pm10             -0.20931    0.01607 -13.021  &lt; 2e-16 ***
+pm10_lag          0.13083    0.01577   8.294 2.24e-16 ***
+temperature_degC -0.06396    0.01171  -5.462 5.43e-08 ***
+pression_hPa     -0.09163    0.01079  -8.490  &lt; 2e-16 ***
+humidite_percent -0.22539    0.01270 -17.742  &lt; 2e-16 ***
+pluie_1h_mm       0.04939    0.01026   4.816 1.60e-06 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.3934 on 1665 degrees of freedom
+Multiple R-squared:  0.8461,    Adjusted R-squared:  0.8452 
+F-statistic:  1017 on 9 and 1665 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>Nous arrivons dans ce cas à ne garder que 9 variables pour un coefficient de détermination ayant à peine baissé.</p>
+<p>Pour savoir si les deux modèles obtenus, l’un avec 12 variables et l’autre avec seulement 9, sont significativement différents, on les soumet à une analyse de la variance avec un test de fisher ayant pour statistique :</p>
+<p>F = ((RSS1 - RSS2) / (p2 - p1)) / (RSS2 / (n - p2))</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lmod_2, lmod_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: ozone ~ ozone_lag + no2 + no2_lag + pm10 + pm10_lag + temperature_degC + 
+    pression_hPa + humidite_percent + pluie_1h_mm - 1
+Model 2: ozone ~ ozone_lag + no_lag + no2 + no2_lag + pm10 + pm10_lag + 
+    temperature_degC + pression_hPa + humidite_percent + point_de_rosee_degC + 
+    vent_direction_degres + pluie_1h_mm - 1
+  Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
+1   1665 257.69                                  
+2   1662 254.88  3    2.8092 6.1062 0.0003955 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>La p_value de ce test est faible , elle nous permet de rejeter l’hypothèse que lmod_1 lmod_2 soient équivalents.</p>
+<p>Les deux modèles sont donc significativement différents, la tentation est grande de choisir le modèle le plus économe par “principe de parcimonie”, mais pour cela il faut s’appuyer sur des arguments tengibles.</p>
+<p>Nous avons vu que le critère du R² ajusté était presque égale entre les deux modèles. essayons de faire le tour des autres critères :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># proposition de fonction pour calculer le critère de mallow:</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>Cp <span class="ot">=</span> <span class="cf">function</span>(modelComplet, modelPartiel ){</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  summary1 <span class="ot">=</span> <span class="fu">summary</span>(modelComplet)</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  summary2 <span class="ot">=</span> <span class="fu">summary</span>(modelPartiel)</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  RSS_p <span class="ot">=</span> <span class="fu">sum</span>(summary2<span class="sc">$</span>residuals<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  sigma2<span class="ot">=</span> summary1<span class="sc">$</span>sigma<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">=</span> <span class="fu">nrow</span>(modelPartiel<span class="sc">$</span>model)</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">=</span> <span class="fu">ncol</span>(modelPartiel<span class="sc">$</span>model)</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>  mallow <span class="ot">=</span> (RSS_p<span class="sc">/</span>sigma2)<span class="sc">-</span>(n<span class="sc">-</span>(<span class="dv">2</span><span class="sc">*</span>p))</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(mallow)</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a><span class="co"># critère de Mallow:</span></span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>mallow_1 <span class="ot">=</span> <span class="fu">Cp</span>(lmod_0, lmod_1)</span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>mallow_2 <span class="ot">=</span> <span class="fu">Cp</span>(lmod_0, lmod_2)</span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a><span class="co"># critère AKAIKE:</span></span>
+<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a>aic_1 <span class="ot">=</span> <span class="fu">AIC</span>(lmod_1)</span>
+<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a>aic_2 <span class="ot">=</span> <span class="fu">AIC</span>(lmod_2)</span>
+<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a><span class="co"># critère BIC :</span></span>
+<span id="cb32-27"><a href="#cb32-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-28"><a href="#cb32-28" aria-hidden="true" tabindex="-1"></a>bic_1 <span class="ot">=</span> <span class="fu">BIC</span>(lmod_1)</span>
+<span id="cb32-29"><a href="#cb32-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-30"><a href="#cb32-30" aria-hidden="true" tabindex="-1"></a>bic_2 <span class="ot">=</span> <span class="fu">BIC</span>(lmod_2)</span>
+<span id="cb32-31"><a href="#cb32-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-32"><a href="#cb32-32" aria-hidden="true" tabindex="-1"></a><span class="co"># tableau :</span></span>
+<span id="cb32-33"><a href="#cb32-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-34"><a href="#cb32-34" aria-hidden="true" tabindex="-1"></a>tableau <span class="ot">=</span> <span class="fu">data.frame</span>( <span class="at">modeles =</span> <span class="fu">c</span>(<span class="st">"lmod_1"</span>, <span class="st">"lmod_2"</span>),</span>
+<span id="cb32-35"><a href="#cb32-35" aria-hidden="true" tabindex="-1"></a>                      <span class="at">MALLOW  =</span> <span class="fu">c</span>(mallow_1, mallow_2),</span>
+<span id="cb32-36"><a href="#cb32-36" aria-hidden="true" tabindex="-1"></a>                      <span class="at">AIC     =</span> <span class="fu">c</span>(aic_1, aic_2),</span>
+<span id="cb32-37"><a href="#cb32-37" aria-hidden="true" tabindex="-1"></a>                      <span class="at">BIC     =</span> <span class="fu">c</span>(bic_1, bic_2)</span>
+<span id="cb32-38"><a href="#cb32-38" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb32-39"><a href="#cb32-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-40"><a href="#cb32-40" aria-hidden="true" tabindex="-1"></a>tableau</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  modeles  MALLOW      AIC      BIC
+1  lmod_1 12.6457 1625.816 1696.315
+2  lmod_2 24.9493 1638.166 1692.395</code></pre>
+</div>
+</div>
+<p>Le critère d’information bayésien penche en faveur du modèle 2 en étant minimal à 1637.244 contre 1639.045 . Le critère de l’AKAIKE est sensiblement proche entre les deux. Des éléments contextuels comme l’économie de ressources et l’interprétabilité favorisent le choix de peu de variables dans le modèle.</p>
+<p>La balance penche en conséquence vers lmod_2 qui sera donc retenu pour continuer.</p>
+</section>
+<section id="diagnostic-du-modèle" class="level2">
+<h2 class="anchored" data-anchor-id="diagnostic-du-modèle">Diagnostic du modèle :</h2>
+<p>Le diagnostic sera mené sur tous les points de contrôle , même si une condition est insatisfaite. Au terme du diagnostic complet une décision sera prise en fonction des résultats.</p>
+<section id="vérifier-les-hypothèses-sur-les-erreurs" class="level3">
+<h3 class="anchored" data-anchor-id="vérifier-les-hypothèses-sur-les-erreurs">1<strong>- Vérifier les hypothèses sur les Erreurs :</strong></h3>
+<section id="homoscédasticité-constance-de-la-variance-des-erreurs" class="level4">
+<h4 class="anchored" data-anchor-id="homoscédasticité-constance-de-la-variance-des-erreurs">1.1- Homoscédasticité : constance de la variance des Erreurs:</h4>
+<ul>
+<li><p><strong>Graphiquement :</strong> Plotter les résiduelles en fonction de des Y estimés, pour détecter une potentielle inconstance de la variance des erreurs, l’Hétéroscédasticité :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">fitted</span>(lmod_2), <span class="fu">residuals</span>(lmod_2), <span class="at">xlab=</span><span class="st">"Fitted"</span>, <span class="at">ylab=</span><span class="st">"Residuals"</span>)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>, <span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="prediction_ozone_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Une variance constante de erreurs aurait du se manifester graphiquement par une symetrie de distribution des erreurs de part et d’autre de l’axe rouge. Le graphique obtenu suggère un problème d’hétéroscédasticité (potentiellement aussi un problème de linéarité dans la structure globale du modèle).</p></li>
+<li><p><strong>Numériquement :</strong> L’indication graphique peut être consolidée par une recherche numérique, en vérifiant l’hypothèse par exemple que les erreurs puissent varier en fonction des y estimés :</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(<span class="fu">sqrt</span>(<span class="fu">abs</span>(<span class="fu">residuals</span>(lmod_2)))<span class="sc">~</span><span class="fu">fitted</span>(lmod_2)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = sqrt(abs(residuals(lmod_2))) ~ fitted(lmod_2))
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.50149 -0.15624 -0.00832  0.14827  0.66069 
+
+Coefficients:
+               Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)    0.502599   0.005451  92.196  &lt; 2e-16 ***
+fitted(lmod_2) 0.039917   0.005927   6.735 2.24e-11 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.223 on 1672 degrees of freedom
+Multiple R-squared:  0.02641,   Adjusted R-squared:  0.02583 
+F-statistic: 45.36 on 1 and 1672 DF,  p-value: 2.244e-11</code></pre>
+</div>
+</div>
+<p>Cette modélisation, indique que la racine de la valeur absolue d’une erreur peut, de façon très significative, être exprimée en fonction de la concentration d’ozone estimée.</p>
+<p><u>Il existe donc un problème sur l’hypothèse de l’homoscédasticité dans notre modèle.</u></p>
+</section>
+<section id="normalité-de-la-distribution-des-erreurs" class="level4">
+<h4 class="anchored" data-anchor-id="normalité-de-la-distribution-des-erreurs">1.2- Normalité de la distribution des erreurs :</h4>
+<ul>
+<li><p><strong>Graphiquement :</strong> Plot QQNorm, c’est à dire le quantile d’une erreur observé, en fonction de son quantile théorique de la loi normale :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(lmod_2), <span class="at">ylab=</span><span class="st">"Residuals"</span> , <span class="at">main=</span><span class="st">"QQnorm des erreurs"</span>)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(<span class="fu">residuals</span>(lmod_2), <span class="at">col=</span><span class="st">"green"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="prediction_ozone_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid" width="672"></p>
+</div>
+</div></li>
+</ul>
+<p>Le graphique permet de constater un motif avec un écart de la ligne de référence, surtout aux extrémités, des valeurs théoriques devant être respectées si les erreurs étaient distribuées normalement.</p>
+<p>Le motif suggère que les valeurs extrêmes sont plus probables dans les erreurs observées que dans une distribution normale. Et que les queues de distributions des erreurs observées sont plus épaisses que celles de la loi normale.</p>
+<ul>
+<li><p><strong>Numériquement :</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(<span class="fu">residuals</span>(lmod_2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  residuals(lmod_2)
+W = 0.99295, p-value = 3.61e-07</code></pre>
+</div>
+</div></li>
+</ul>
+<p>L’hypothèse Ho que la distribution des erreurs soit normalement distribuée est rejetée avec une p-value très faible.</p>
+<p><u>Il existe donc un problème sur l’hypothèse de la normalité de distribution des erreurs dans notre modèle.</u></p>
+</section>
+</section>
+<section id="détecter-les-obserations-atypiques" class="level3">
+<h3 class="anchored" data-anchor-id="détecter-les-obserations-atypiques">2- Détecter les obserations atypiques :</h3>
+<section id="les-points-leviers" class="level4">
+<h4 class="anchored" data-anchor-id="les-points-leviers">2.1- Les points leviers :</h4>
+<p>Les points leviers sont des valeur extrêmes dans les predicteurs, ayant le potentiel de changer significativement le fit.</p>
+<ul>
+<li><p>Graphiquemnt :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># obtention de l'influence de chaque observation sur l'ajustement</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>mesures_leviers <span class="ot">=</span> <span class="fu">hatvalues</span>(lmod_2)</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="co"># plotter le quantile normal théorique de la mesure</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a><span class="fu">halfnorm</span>(mesures_leviers, <span class="at">ylab=</span> <span class="st">"leviers"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="prediction_ozone_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Le graphique suggère la présence de points leviers en particulier les mesures 1116 et 144.</p></li>
+<li><p>Numériquement : le seuil couramment utilisé pour qualifier de point levier est le suivant :</p>
+<p>mesure d’influence &gt; 2*(p)/n</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculer le Seuil </span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>seuil <span class="ot">=</span> (<span class="dv">2</span><span class="sc">*</span><span class="dv">9</span>)<span class="sc">/</span><span class="dv">1674</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="co"># récuperer les points levier identifiés numériquement</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>mesures_leviers_retenus <span class="ot">=</span> <span class="fu">data.frame</span>(mesures_leviers[mesures_leviers <span class="sc">&gt;</span> seuil])</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(mesures_leviers_retenus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 114   1</code></pre>
+</div>
+</div>
+<p>Le seuil choisi, permet d’identifier 114 observations passibles d’avoir disproportionnellement impacté l’ajustement. Un correctif potentiel est de supprimer ces observations et d’évaluer l’impact sur la modélisation.</p>
+</section>
+<section id="les-valeurs-aberrantes-outliers" class="level4">
+<h4 class="anchored" data-anchor-id="les-valeurs-aberrantes-outliers">2.2- les valeurs aberrantes (outliers) :</h4>
+<p>Une valeur potentiellement aberrante aura tendance à s’écarter fortement du reste des données de l’échantillon, et par conséquent il y aura une probabilité faible d’observer cette valeur.</p>
+<p>Après le calcul des residus studentisés, on applique la correction de Bonféroni pour calculer les seuils qui doivent attirer notre attention pour observer de près une ligne de mesure : pour un seuil de significativité alpha, la correction consiste à diviser ce seuil par le nombre d’observations.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">=</span> <span class="fl">0.05</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> <span class="dv">1665</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">1674</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>stud <span class="ot">=</span> <span class="fu">rstudent</span>(lmod_2)</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>seuil_critique_bonferoni_abs <span class="ot">=</span> <span class="fu">abs</span>(<span class="fu">qt</span>(alpha<span class="sc">/</span>(n<span class="sc">*</span><span class="dv">2</span>), df))</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>outliers <span class="ot">=</span> <span class="fu">which</span>(<span class="fu">abs</span>(stud) <span class="sc">&gt;</span> seuil_critique_bonferoni_abs)</span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(outliers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+</div>
+<p>Dans notre cas, nous n’avons pas de valeurs aberrantes. Dans le cas ou il y en aurait eu, il aurait fallu étudier chaque observation concerné pour décider de la suppression ou pas. En effet une valeur aberrante n’est pas forcément fausse, elle est même souvent l’occasion de découvrir des aspects nouveaux d’un phénomène.</p>
+</section>
+<section id="les-points-dinfluence" class="level4">
+<h4 class="anchored" data-anchor-id="les-points-dinfluence">2.3- Les points d’influence :</h4>
+<p>On procède au calcul de la distance de cook et</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>cook <span class="ot">=</span> <span class="fu">cooks.distance</span>(lmod_2)</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="fu">halfnorm</span>(cook)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="prediction_ozone_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Plusieurs points d’influence sont détectés en particulier l’observation 1116 et 252. Il peut être envisagé de supprimer dégressivement et une à une chaque point d’influence et d’observer le comportement d’un nouveau modèle entrainé sur les données dépourvues de ce point d’influence.</p>
+</section>
+</section>
+<section id="structure-du-modèle" class="level3">
+<h3 class="anchored" data-anchor-id="structure-du-modèle">3- Structure du modèle :</h3>
+<section id="structure-générale" class="level4">
+<h4 class="anchored" data-anchor-id="structure-générale">3.1- Structure générale :</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lmod_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="prediction_ozone_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>L’observation des différents graphes, en particulier celui des residus en fonction des estimations, permet de détecter des déficiences dans la structure globale du modèle, en effet il existe potentiellement un problème de Linéarité.</p>
+</section>
+<section id="par-variable" class="level4">
+<h4 class="anchored" data-anchor-id="par-variable">3.2- Par Variable :</h4>
+<p>La fonction termplot est utilisée ici afin de visualiser l’effet d’une variable prédictive sur la concentration en ozone, en éliminant l’influence des autres variable :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfcol =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">3</span>))</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Par variable ( terms = num var indep)</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="fu">termplot</span>(lmod_2, <span class="at">partial.resid =</span> <span class="cn">TRUE</span>, <span class="at">terms =</span> <span class="dv">1</span>)</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="fu">termplot</span>(lmod_2, <span class="at">partial.resid =</span> <span class="cn">TRUE</span>, <span class="at">terms =</span> <span class="dv">2</span>)</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="fu">termplot</span>(lmod_2, <span class="at">partial.resid =</span> <span class="cn">TRUE</span>, <span class="at">terms =</span> <span class="dv">3</span>)</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a><span class="fu">termplot</span>(lmod_2, <span class="at">partial.resid =</span> <span class="cn">TRUE</span>, <span class="at">terms =</span> <span class="dv">4</span>)</span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a><span class="fu">termplot</span>(lmod_2, <span class="at">partial.resid =</span> <span class="cn">TRUE</span>, <span class="at">terms =</span> <span class="dv">5</span>)</span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a><span class="fu">termplot</span>(lmod_2, <span class="at">partial.resid =</span> <span class="cn">TRUE</span>, <span class="at">terms =</span> <span class="dv">6</span>)</span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a><span class="fu">termplot</span>(lmod_2, <span class="at">partial.resid =</span> <span class="cn">TRUE</span>, <span class="at">terms =</span> <span class="dv">7</span>)</span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a><span class="fu">termplot</span>(lmod_2, <span class="at">partial.resid =</span> <span class="cn">TRUE</span>, <span class="at">terms =</span> <span class="dv">8</span>)</span>
+<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a><span class="fu">termplot</span>(lmod_2, <span class="at">partial.resid =</span> <span class="cn">TRUE</span>, <span class="at">terms =</span> <span class="dv">9</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="prediction_ozone_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Avec cette visualisation dissociée, on observe également des motifs clairement non linéaires, en particulier pour l’humidité et la pluie.</p>
+</section>
+</section>
+<section id="conclusions-du-diagnostic" class="level3">
+<h3 class="anchored" data-anchor-id="conclusions-du-diagnostic">4- Conclusions du diagnostic :</h3>
+<p>Le modèle choisi, bien qu’ayant relativement peu d’observations atypiques, souffre de carences sur les hypothèses de base. En effet il montre à la fois un problème de Linéarité et de variance des erreurs.</p>
+<p>La suppression des observations atypiques ne suffit pas à lisser ces carences.</p>
+<p>Les causes possibles sont nombreuses :</p>
+<ul>
+<li><p>Autocorrélation à cause des variables laggées ?</p></li>
+<li><p>La relation précurseur-composé entre des polluants ?</p></li>
+<li><p>…</p></li>
+</ul>
+<p>Le diagnostic nous pousse à reprendre le modèle en main et à trouver des solutions. Soit en estimant les coefficients Beta indépendamment de l’hypothèse de la normalité des erreurs. Soit en trouvant une transformation du modèle permettant de corriger les carences.</p>
+</section>
+</section>
+<section id="prise-en-compte-du-diagnostic-et-correctifs" class="level2">
+<h2 class="anchored" data-anchor-id="prise-en-compte-du-diagnostic-et-correctifs">Prise en compte du diagnostic et correctifs :</h2>
+<section id="estimation-bootstrap-des-coefficients" class="level3">
+<h3 class="anchored" data-anchor-id="estimation-bootstrap-des-coefficients">1- Estimation bootstrap des coefficients :</h3>
+<p>Cette technique permet de s’affranchir de l’hypothèse de la normalité de distribution des erreurs dans le calcul d’un intervalle de confiance des coefficients.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">=</span> <span class="fl">0.05</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">=</span> lmod_2</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Fixer le nombre de tirages :</span></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>nbr_tirages <span class="ot">=</span> <span class="dv">4000</span></span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Garder le même résultat si réexecution de la chunk</span></span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Créer la matrice qui contiendra les coeffs Beta de chaque itération</span></span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>p <span class="ot">=</span> <span class="fu">length</span>(model<span class="sc">$</span>coefficients)</span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a>matrice_coeffs <span class="ot">=</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, nbr_tirages, p)</span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(matrice_coeffs) <span class="ot">=</span> <span class="fu">names</span>(model<span class="sc">$</span>coefficients)</span>
+<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a><span class="co"># récupérer les residuals et les fitted</span></span>
+<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a>residuals <span class="ot">=</span> <span class="fu">residuals</span>(model)</span>
+<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a>fitted <span class="ot">=</span> <span class="fu">fitted</span>(model)</span>
+<span id="cb48-17"><a href="#cb48-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-18"><a href="#cb48-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Réaliser les tirages avec remise et remplir la matrice des coeffs</span></span>
+<span id="cb48-19"><a href="#cb48-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nbr_tirages){</span>
+<span id="cb48-20"><a href="#cb48-20" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb48-21"><a href="#cb48-21" aria-hidden="true" tabindex="-1"></a>  booty <span class="ot">=</span> fitted <span class="sc">+</span> <span class="fu">sample</span>(residuals,  <span class="at">rep=</span><span class="cn">TRUE</span>)</span>
+<span id="cb48-22"><a href="#cb48-22" aria-hidden="true" tabindex="-1"></a>  model_i <span class="ot">=</span> <span class="fu">update</span>(model, booty <span class="sc">~</span> .)</span>
+<span id="cb48-23"><a href="#cb48-23" aria-hidden="true" tabindex="-1"></a>  matrice_coeffs[i,]<span class="ot">=</span> <span class="fu">coef</span>(model_i)</span>
+<span id="cb48-24"><a href="#cb48-24" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb48-25"><a href="#cb48-25" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb48-26"><a href="#cb48-26" aria-hidden="true" tabindex="-1"></a> <span class="co"># Obtenir l'intervalle de confiance pour chaque predicteur</span></span>
+<span id="cb48-27"><a href="#cb48-27" aria-hidden="true" tabindex="-1"></a>CIs <span class="ot">=</span> <span class="fu">apply</span>(matrice_coeffs, <span class="dv">2</span>, <span class="cf">function</span>(x) <span class="fu">quantile</span>(x, <span class="fu">c</span>((alpha<span class="sc">/</span><span class="dv">2</span>), <span class="dv">1</span><span class="sc">-</span>(alpha<span class="sc">/</span><span class="dv">2</span>))))</span>
+<span id="cb48-28"><a href="#cb48-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-29"><a href="#cb48-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-30"><a href="#cb48-30" aria-hidden="true" tabindex="-1"></a>CIS <span class="ot">=</span> <span class="fu">t</span>(CIs)</span>
+<span id="cb48-31"><a href="#cb48-31" aria-hidden="true" tabindex="-1"></a>CIS <span class="ot">=</span> <span class="fu">cbind</span>(CIS, <span class="fu">coefficients</span>(lmod_2))</span>
+<span id="cb48-32"><a href="#cb48-32" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(CIS)[<span class="dv">1</span>] <span class="ot">=</span> <span class="st">"seuil 2.5% "</span></span>
+<span id="cb48-33"><a href="#cb48-33" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(CIS)[<span class="dv">2</span>] <span class="ot">=</span> <span class="st">"seuil 97.5%"</span></span>
+<span id="cb48-34"><a href="#cb48-34" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(CIS)[<span class="dv">3</span>] <span class="ot">=</span> <span class="st">"valeur modele"</span></span>
+<span id="cb48-35"><a href="#cb48-35" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(CIS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">seuil 2.5%</th>
+<th style="text-align: right;">seuil 97.5%</th>
+<th style="text-align: right;">valeur modele</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ozone_lag</td>
+<td style="text-align: right;">0.6410145</td>
+<td style="text-align: right;">0.6991110</td>
+<td style="text-align: right;">0.6699123</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">no2</td>
+<td style="text-align: right;">-0.6356981</td>
+<td style="text-align: right;">-0.5754883</td>
+<td style="text-align: right;">-0.6060297</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">no2_lag</td>
+<td style="text-align: right;">0.4054103</td>
+<td style="text-align: right;">0.4744117</td>
+<td style="text-align: right;">0.4405099</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">pm10</td>
+<td style="text-align: right;">-0.2413869</td>
+<td style="text-align: right;">-0.1793067</td>
+<td style="text-align: right;">-0.2093053</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">pm10_lag</td>
+<td style="text-align: right;">0.1003170</td>
+<td style="text-align: right;">0.1623675</td>
+<td style="text-align: right;">0.1308309</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">temperature_degC</td>
+<td style="text-align: right;">-0.0871139</td>
+<td style="text-align: right;">-0.0412115</td>
+<td style="text-align: right;">-0.0639615</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">pression_hPa</td>
+<td style="text-align: right;">-0.1122481</td>
+<td style="text-align: right;">-0.0703552</td>
+<td style="text-align: right;">-0.0916283</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">humidite_percent</td>
+<td style="text-align: right;">-0.2510233</td>
+<td style="text-align: right;">-0.2000072</td>
+<td style="text-align: right;">-0.2253892</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">pluie_1h_mm</td>
+<td style="text-align: right;">0.0299981</td>
+<td style="text-align: right;">0.0692823</td>
+<td style="text-align: right;">0.0493919</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Les intervalles de confiance obtenus par le bootstrap, restent cohérents avec les valeurs des coefficients obtenus par la modélisation :</p>
+<ul>
+<li><p>Les intervalles sont étroits, et les bornes de chaque sont de même signe.</p></li>
+<li><p>Chaque coefficient est inclus dans l’intervalle de confiance qui lui correspond.</p></li>
+<li><p>Chaque coefficients est bien centré dans l’intervalle de confiance qui lui correspond.</p></li>
+</ul>
+<p>Ceci est un argument en faveur de la modélisation linéaire diagnostiquée :</p>
+<p>L’hétéroscedasticité détectée ne semble pas suffisamment forte pour polluer le calcul des coefficients des prédicteurs du modèle.</p>
+<p>Les coefficients obtenus par la modélisation peuvent être considérés en gardant en tête les lacunes du modèle.</p>
+</section>
+<section id="transformation-du-modèle" class="level3">
+<h3 class="anchored" data-anchor-id="transformation-du-modèle">2- Transformation du modèle :</h3>
+<section id="reflexion" class="level4">
+<h4 class="anchored" data-anchor-id="reflexion">2.1- Reflexion :</h4>
+<p>L’objectif ici est de s’inspirer du modèle précécédent, en prenant en compte ses indications et ses carences, pour développer un modèle de meilleur qualité et précision, et qui se conforme aux hypothèses de la normalité et de la constance des variances des erreurs. Ces hypothèses étant nécéssaires aux méthodes d’estimation par moindres carrés.</p>
+<p>Les différentes visualisations graphiques précédentes permettent d’éliminer une modélisation polynomiale qui donnerait des réponses moins linéaires encore.</p>
+<p>La piste qu’une puissance de Y puisse être une combinaison linéaire des prédicteurs est néanmoins plausible.</p>
+<p>Pour explorer cette piste : y^lambda = beta_0 + beta_1 X1 + beta_2 X2 + ..+beta_p Xp</p>
+<p>Il est peut être chronophage et arbitraire ( à notre niveau limité de connaissance ) de se lancer dans des choix de test de valeurs lambda au hasard.</p>
+<p>Il est plus prudent de trouver une méthode permettant mathématiquement de cibler cette valeur.</p>
+<p>Nous allons nous servir de la transformée Box-Cox qui permet de trouver le paramètre lambda optimal pour la linéarité de l’équation.</p>
+<p>La transformée Box-Cox est une méthode efficace conçue pour des réponses Y strictement positives. Elle calcule le log-vraisemblance pour un set de valeurs de lambda en transformant la variable réponse selon la formule gλ(y). Ensuite elle cherche à trouver la valeur lambda qui maximise ce log-vraisemblance. Cela revient à trouver la valeur de lambda optimale pour notre équation.</p>
+</section>
+<section id="application" class="level4">
+<h4 class="anchored" data-anchor-id="application">2.2- Application :</h4>
+<p>La transformée Cox-Box étant apppliquée à des réponses positives, nous exploiterons ici les données du training set non centrées et non réduites :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>Lmod_non_transformee <span class="ot">=</span> <span class="fu">lm</span>(ozone<span class="sc">~</span>., <span class="at">data =</span>training.set[, <span class="dv">2</span><span class="sc">:</span><span class="dv">18</span>])</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxcox</span>(Lmod_non_transformee, <span class="at">lambda =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="at">by =</span> <span class="fl">0.1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="prediction_ozone_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Un premier set de test de valeurs lambda permet de la situer entre 0.4 et 0.7</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxcox</span>(Lmod_non_transformee, <span class="at">lambda =</span> <span class="fu">seq</span>(<span class="fl">0.4</span>, <span class="fl">0.7</span>, <span class="at">by =</span> <span class="fl">0.1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="prediction_ozone_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Une deuxième itération permet d’affiner cette valeur et de la situer aux alentours de 0.537. Cette valeur sera prise pour transformer le modèle :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>lmod_transformee<span class="ot">=</span> <span class="fu">lm</span>(ozone<span class="sc">^</span><span class="fl">0.537</span><span class="sc">~</span>. , <span class="at">data =</span>training.set[, <span class="dv">2</span><span class="sc">:</span><span class="dv">18</span>])</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lmod_transformee)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="prediction_ozone_files/figure-html/unnamed-chunk-41-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Cette transformation montre une amélioration nette de la normalité ( graphe “normal Q-Q”) et de l’homoscédasticité ( graphe “residuals vs fitted” et “scale location”).Numériquement nous constatons une augmentation nette de la p-value d’un test de shapiro appliqué aux residuals de ce modèle :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(lmod_transformee<span class="sc">$</span>residuals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  lmod_transformee$residuals
+W = 0.99737, p-value = 0.006906</code></pre>
+</div>
+</div>
+<p>Cette transformation a donc été bénéfique pour la modélisation.</p>
+<p>Essayons de gagner encore en qualité, supprimons les variables non significatives , avec l’aide de notre fonction construite précédemment backwards(), le seuil de significativité est fixé à 0.05 :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>lmod_transformee_plus1 <span class="ot">=</span> <span class="fu">backwards</span>(lmod_transformee, <span class="fl">0.05</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Et supprimons les observations atypiques de la data des variables qui ont été maintenues par la procédure backward :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># récupérer les variables significatives du jeu training</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>training.set.final <span class="ot">=</span> training.set[, <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">10</span>,<span class="dv">11</span>,<span class="dv">12</span>,<span class="dv">13</span>, <span class="dv">14</span>,<span class="dv">15</span>,<span class="dv">17</span>,<span class="dv">18</span>)]</span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a><span class="co"># supprimer les points leviers :</span></span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>leviers <span class="ot">=</span> <span class="fu">hatvalues</span>(lmod_transformee_plus1)</span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>seuil <span class="ot">=</span> (<span class="dv">2</span><span class="sc">*</span><span class="dv">14</span>)<span class="sc">/</span><span class="dv">1674</span></span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>leviers_retenus <span class="ot">=</span> <span class="fu">data.frame</span>(leviers[leviers <span class="sc">&gt;</span> seuil])</span>
+<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a>training.set.final <span class="ot">=</span> training.set.final[<span class="sc">!</span>(<span class="fu">rownames</span>(training.set.final) <span class="sc">%in%</span> <span class="fu">rownames</span>(leviers_retenus)),]</span>
+<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-11"><a href="#cb55-11" aria-hidden="true" tabindex="-1"></a><span class="co"># supprimer mesures aberrantes :</span></span>
+<span id="cb55-12"><a href="#cb55-12" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">=</span> <span class="fl">0.05</span></span>
+<span id="cb55-13"><a href="#cb55-13" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> <span class="dv">1550</span></span>
+<span id="cb55-14"><a href="#cb55-14" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">1564</span> <span class="co"># les set est déjà débarrassé des 110 points leviers</span></span>
+<span id="cb55-15"><a href="#cb55-15" aria-hidden="true" tabindex="-1"></a>stud <span class="ot">=</span> <span class="fu">rstudent</span>(lmod_transformee_plus1)</span>
+<span id="cb55-16"><a href="#cb55-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-17"><a href="#cb55-17" aria-hidden="true" tabindex="-1"></a>seuil_critique_bonferoni_abs <span class="ot">=</span> <span class="fu">abs</span>(<span class="fu">qt</span>(alpha<span class="sc">/</span>(n<span class="sc">*</span><span class="dv">2</span>), df))</span>
+<span id="cb55-18"><a href="#cb55-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-19"><a href="#cb55-19" aria-hidden="true" tabindex="-1"></a>outliers <span class="ot">=</span> <span class="fu">which</span>(<span class="fu">abs</span>(stud) <span class="sc">&gt;</span> seuil_critique_bonferoni_abs)</span>
+<span id="cb55-20"><a href="#cb55-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-21"><a href="#cb55-21" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(outliers) <span class="co">#  = 0 , =&gt; zéro outliers trouvés</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># supprimer les points d'influence</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>cook <span class="ot">=</span> <span class="fu">cooks.distance</span>(lmod_transformee_plus1)</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>indices_influents <span class="ot">=</span> <span class="fu">which</span>(cook <span class="sc">&gt;</span> <span class="dv">4</span><span class="sc">/</span><span class="dv">1564</span>) <span class="co"># règle empirique</span></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>training.set.final <span class="ot">=</span> training.set.final[<span class="sc">-</span>indices_influents, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Dans cette épuration, nous avons pu supprimer 111 points leviers et 87 points d’influence.</p>
+<p>Regardons l’effet sur la modélisation :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>final_model <span class="ot">=</span> <span class="fu">backwards</span>(<span class="fu">lm</span>(ozone<span class="sc">^</span><span class="fl">0.537</span><span class="sc">~</span>., <span class="at">data =</span> training.set.final), <span class="fl">0.05</span>)</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(final_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="prediction_ozone_files/figure-html/unnamed-chunk-45-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Les graphes de la structure du modèle montrent une amélioration supplémentaire de la normalité de la distribution des résidus et de leurs homoscédasticité.</p>
+<p>Observons les coefficients du modèle :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(final_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = ozone^0.537 ~ ., data = training.set.final)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.42786 -0.57516  0.03071  0.53946  2.80878 
+
+Coefficients:
+                        Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)           49.8358182  3.4465444  14.460  &lt; 2e-16 ***
+ozone_lag              0.0698919  0.0015385  45.430  &lt; 2e-16 ***
+no                    -0.0347406  0.0053000  -6.555 7.69e-11 ***
+no2                   -0.1120249  0.0034121 -32.832  &lt; 2e-16 ***
+no2_lag                0.0842878  0.0034482  24.444  &lt; 2e-16 ***
+pm2.5                 -0.0335451  0.0084633  -3.964 7.74e-05 ***
+pm10                  -0.0148736  0.0072657  -2.047  0.04083 *  
+pm10_lag               0.0272142  0.0033364   8.157 7.32e-16 ***
+temperature_degC      -0.6176848  0.0974476  -6.339 3.08e-10 ***
+pression_hPa          -0.0300868  0.0026754 -11.246  &lt; 2e-16 ***
+humidite_percent      -0.1510374  0.0186652  -8.092 1.22e-15 ***
+point_de_rosee_degC    0.5842626  0.1001639   5.833 6.68e-09 ***
+vent_direction_degres  0.0008036  0.0002709   2.967  0.00306 ** 
+pluie_1h_mm            0.4014431  0.0662569   6.059 1.74e-09 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.8879 on 1467 degrees of freedom
+Multiple R-squared:  0.8685,    Adjusted R-squared:  0.8673 
+F-statistic: 745.2 on 13 and 1467 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>Nous avons en fin compte un modèle avec 12 variables prédictives et 13 coefficients dont l’interprétation sémantique est :</p>
+<ul>
+<li><p>L’intercept : c’est la valeur estimée de la concentration atmosphérique en ozone si toutes les variables prédictives avaient une valeur de zéro.</p></li>
+<li><p>coefficient Ozone_lag : le prédicteur est la concentration en ozone 24 heures avant. Si toutes les autres variables sont maintenues constantes, l’augmentation de 100 µg/m3 de la concentration d’ozone de “la veille”, <strong>augmentera</strong> de 7.02 µg/m3 la réponse c’est à dire la concentration atmosphérique en ozone du jour considéré.</p></li>
+<li><p>coefficient no : le prédicteur est la concentration en monoxyde d’azone. Si toutes les autres variables sont maintenues constantes, l’augmentation de 100 µg/m3 de la concentration atmosphérique en monoxyde d’azote, <strong>diminuera</strong> de 3.88 µg/m3 la réponse, c’est à dire la concentration atmosphérique en ozone.</p></li>
+<li><p>coefficient no2 : Le prédicteur est la concentration en dioxyde d’azote. Si toutes les autres variables sont maintenues constantes, l’augmentation de 100 µg/m3 de la concentration atmosphérique en dioxyde d’azote, <strong>diminuera</strong> de 11.23 µg/m3 la réponse, c’est à dire la concentration atmosphérique en ozone.</p></li>
+<li><p>coefficient no2_lag : le prédicteur est la concentration en dioxyde d’azote 24h avant. Contrairement à la concentration du jour en NO2, La concentration atmosphérique de la veille en NO2 augmente la réponse. Ceci peut sembler étrange, néanmoins des explications chimiques peuvent le justifier. En effet la réaction entre dioxyde d’azote (NO2) et l’ozone (O3) est complexe et peut conduire à la formation <u>ou</u> à la destruction de l’ozone, en fonction des conditions environnementales. Une forte concentration en NO2 la veille est une forte concentration de précurseur de l’ozone du jour. Tandis qu’une forte concentration en NO2 le jour même signifie que l’équilibre de la réaction était en faveur de la formation de NO2 au détriment de l’ozone.</p></li>
+<li><p>coefficient pm2.5 : le prédicteur est la concentration en particules fines de taille inférieure à 2.5 µm. Si toutes les autres variables sont maintenues constantes, l’augmentation de 100 µg/m3 de la concentration atmosphérique en pm2.5, <strong>diminuera</strong> de 4.93 µg/m3 la réponse, c’est à dire la concentration atmosphérique en ozone.</p></li>
+<li><p>coefficient pm10_lag : le prédicteur est la concentration en particules fines pm10, 24 avant. Si toutes les autres variables sont maintenues constantes, l’augmentation de 100 µg/m3 de la concentration atmosphérique en particules fines de diamètre inférieur à 10 µm , <strong>augmentera</strong> de 2.63 µg/m3 la réponse, c’est à dire la concentration en ozone.</p></li>
+<li><p>coefficient température : le prédicteur est la mesure de la température en degré celsius. Si toutes les autres variables étaient maintenues constantes, une augmentation de 10 degrés celsius de la température, <strong>diminuera</strong> de 6.06 µg/m3 la concentration atmosphérique en ozone.</p></li>
+<li><p>coefficient pression atmosphérique : le prédicteur est la pression atmosphérique mesurée en hectopascals. Si toutes les autres variables étaient maintenues constantes, une augmentation de 10 hectopascals de la pression, <strong>diminuera</strong> de 0.28 µg/m3 la concentration atmosphérique en ozone.</p></li>
+<li><p>coefficient humidité : le prédicteur est l’humidité relative, mesurée pourcentage de staturation de l’air en vapeur d’eau. Si toutes les autres variables étaient maintenues constantes, une augmentation de 10% de la saturation en vapeur d’eau de l’air ambiant, <strong>diminuera</strong> de 1.48 µg/m3 la concentration atmosphérique en ozone.</p></li>
+<li><p>coefficient point de rosée : le prédicteur est la mesure de la température maximale à la quelle de la vapeur d’eau se condense naturellement dans les conditions de pression et d’humidité de la même ligne. Si toutes les autres variables étaient maintenues constantes, une augmentation de 10 degrés de cette mesure, <strong>augmentera</strong> de 5.66 µg/m3 la concentration atmosphérique en ozone.</p></li>
+<li><p>coefficient direction du vent : le prédicteur est la direction du vent qui est mesurée en utilisant un angle en degrés à partir du nord, dans le sens des aiguilles d’une montre. Un vent soufllant de l’ouest (270 degrés) aura <strong>un effet marginal positif</strong> plus important qu’un vent soufflant de l’est (90 degrés), sur la concentration atmosphérique en ozone à Albertville.</p></li>
+<li><p>coefficient pluie : le prédicteur est la quantité de pluie précipitée dans l’heure qui précéde, mesurée en mm/m2 (représente 1 litre d’au par mètre carré). Si toutes les autres variables étaient maintenues constantes, une précipitation de 10 mm/m2 une heure avant, <strong>augmentera</strong> de 4.08 µg/m3 la concentration atmosphérique en ozone.</p></li>
+</ul>
+<p>Le coefficient d’un prédicteur représente mathématiquement la dérivée partielle de la réponse par rapport au prédicteur. En fonction que le coefficient soit positif ou négatif, le prédicteur va avoir un effet marginal augmentant ou diminuant la réponse.</p>
+</section>
+</section>
+</section>
+<section id="evaluation-de-la-qualité-des-prédictions" class="level2">
+<h2 class="anchored" data-anchor-id="evaluation-de-la-qualité-des-prédictions">Evaluation de la qualité des prédictions :</h2>
+<p>Mettons le modèle face à sa première responsabilité, qui est de prédire des valeurs fiables de la concentration atmosphérique en ozone en fonction des prédicteurs, nous avons dans un premier temps sauvegardé 20% des données disponibles pour la phase Test :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>ozone_observation <span class="ot">=</span> testing.set[,<span class="dv">2</span>]</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>ozone_prediction <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="fu">predict.lm</span>(final_model, testing.set))</span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>stat1<span class="ot">=</span><span class="fu">summary</span>(ozone_observation)</span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>stat2<span class="ot">=</span><span class="fu">summary</span>(ozone_prediction)</span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>stat <span class="ot">=</span> <span class="fu">cbind</span>(stat1, stat2)</span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(stat)<span class="ot">=</span> <span class="fu">c</span>(<span class="st">"ozone observé"</span>, <span class="st">"ozone prédit"</span>)</span>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(stat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">ozone observé</th>
+<th style="text-align: left;">ozone prédit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Min.</td>
+<td style="text-align: left;">2.9</td>
+<td style="text-align: left;">Min. : 0.7541</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1st Qu.</td>
+<td style="text-align: left;">15.5</td>
+<td style="text-align: left;">1st Qu.: 4.5586</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Median</td>
+<td style="text-align: left;">32</td>
+<td style="text-align: left;">Median : 6.5036</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mean</td>
+<td style="text-align: left;">34.744630071599</td>
+<td style="text-align: left;">Mean : 6.3990</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3rd Qu.</td>
+<td style="text-align: left;">52.1</td>
+<td style="text-align: left;">3rd Qu.: 8.1650</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Max.</td>
+<td style="text-align: left;">90.4</td>
+<td style="text-align: left;">Max. :12.2388</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Les statistiques descriptives montrent une tendance chez le modèle à s’écarter de la bonne valeur en la minimisant, ceci est confirmé par l’exploitation graphique des données :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ozone_observation, <span class="at">type=</span><span class="st">"l"</span>, <span class="at">col=</span><span class="st">"blue"</span>, </span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">"du 01/01/2023 au 01/04/2023"</span>,</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab=</span><span class="st">"Ozone observé vs ozone prédit"</span>)</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(ozone_prediction, <span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="prediction_ozone_files/figure-html/unnamed-chunk-48-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>A décharge du modèle, le graphe montre également que les gradients restent du même signe : quand l’ozone observé augmente, l’ozone prédit aussi, et vice versa. Ce même raisonnement est applicable aussi sur la dérivée seconde des deux courbes.</p>
+<p>Essayons d’avoir un critère numérique, calculons le RMSE. Le RMSE est calculé en prenant la racine carrée de la moyenne des carrés des différences entre les valeurs prévues par le modèle et les vraies valeurs. En d’autres termes, le RMSE mesure l’écart-type de l’erreur de prévision :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>rmse <span class="ot">=</span> <span class="fu">RMSE</span>(ozone_prediction[,<span class="dv">1</span>], ozone_observation)</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>rmse</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 34.96301</code></pre>
+</div>
+</div>
+<p>Le RMSE obtenu est de 37.09, soit une valeur elevée par rapport aux moyenne et médiane des concentrations observés. Le RMSE par définition pénalisant plus fortement les grandes erreurs, essayons une autre métrique:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>mape <span class="ot">=</span> <span class="fu">MAPE</span>( ozone_prediction[,<span class="dv">1</span>], ozone_observation)</span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>mape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.7329957</code></pre>
+</div>
+</div>
+<p>Le MAPE mesure l’erreur moyenne absolue de prévision en pourcentage de la valeur réelle. Il est égale à 0.75 pour notre modèle. Signifiant que l’erreur moyenne absolue des prévisions est de 0,75 fois la valeur réelle. En d’autres termes, en moyenne, les prévisions ont eu une erreur relative absolue de 75%.</p>
+<p>Cette valeur de MAPE, est relativement elevée, cependant elle peut être acceptables dans les normes de la prévision météo et de pollution.</p>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>Dans ce travail, des données réelles de mesures météo et de pollution, de la ville d’Albertville, ont été exploitées. Le but étant de trouver une modélisation linéaire fiable de la concentration atmosphérique d’un polluant secondaire toxique : l’ozone (O3).</p>
+<p>Pour mettre en place un modèle final, il a fallu avancer en se servant d’outils de rectification de trajectoire, tel que les tests d’hypothèse, les méthodes d’élimination backward et les outils de diagnostic.</p>
+<p>Une première occasion de recul sur le modèle, a été imposé par un diagnostic mettant en doute la linéarité de la réponse , telle qu’elle est, part rapport aux prédicteurs. Le correctif d’une transformation de Cox-Box est réalisé, avec une valeur de lambda égale à environ 1/2.</p>
+<p>Les données ont été également débarrassées de tous point leviers ou d’influence.</p>
+<p>Le modèle final bien qu’offrant des prédictions relativement éloignées des observations, garde une certaine cohérence au niveau de la métrique MAPE dans la prévision météo.</p>
+<p>Les prévisions du modèle final gardent également une cohérence au niveau du sens du déplacement de la réponse: quand la valeur prédite augmente, l’observation aussi, et vice-versa.</p>
+<p>Ce modèle est potentiellement améliorable en envisageant :</p>
+<ul>
+<li><p>une autre famille de transformation.</p></li>
+<li><p>L’application de la modélisation sur la PCA des données.</p></li>
+<li><p>la prise en considération d’autres variables, sur des intervalles plus longs.</p></li>
+<li><p>l’ajout de termes non linéaires.</p></li>
+<li><p>..</p></li>
+</ul>
+<p>En fin de compte, ce travail fournit une base certaine pour de futures explorations de prédiction de la concentration d’ozone et de la compréhension des relations entre les variables météorologiques et les polluants atmosphériques, dans lesquelles on pourrait inclure plus de données, ainsi que les futures connaissances qui seront acquises en master comme l’apprentissage automatisé.</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

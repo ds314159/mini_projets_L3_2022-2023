@@ -1,0 +1,2 @@
+"0",""
+"0","    plot(fitted(lmod_2), residuals(lmod_2), xlab=""Fitted"", ylab=""Residuals"")"

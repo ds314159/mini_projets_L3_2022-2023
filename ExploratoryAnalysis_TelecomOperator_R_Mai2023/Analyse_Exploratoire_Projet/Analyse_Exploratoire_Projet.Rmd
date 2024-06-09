@@ -1,0 +1,1375 @@
+---
+title: Analyse Exploratoire des Données clients d'un opérateur télécom
+
+author:
+  - firstname: Mehdi
+    lastname: Mansour
+    email: mehdi.mansour@univ-lyon2.fr
+    affiliationref: addr1
+    
+      
+affiliations:
+  - ref: addr1
+    name: L3_Data_Science
+    address: ICOM, 5 Av. Pierre Mendès France, 69500 Bron
+    
+
+keywords:
+  - PCA
+  - AFC
+  - ACM
+  - T-SNE
+  - Inférence
+  - Prédiction
+  
+supplements:
+  - title: Annexe 1, liste complète des variables
+ 
+doi: "999999999/chaine_aléatoire/test"
+
+acknowledgements: |
+  Toute ma gratitude à mes professeurs pour tout le savoir qu'ils nous ont transmis.Une pensée optimiste à ceux qui défendent nos droits.
+abstract: |
+  Dans ce travail, le set de données contient des informations sur les clients d'une entreprise de télécommunications. Il comprend 100 variables pour chaque client, telles que leur âge, leur lieu de résidence, leur historique d'utilisation de services téléphoniques et leur comportement de paiement. L’objectif étant de mettre en application les techniques d’analyse exploratoire et de réduction d dimension
+  Le choix de ce jeu est un compromis répondant à plusieurs besoins. D’abord l’analyse de ce type de données est un réel enjeu économique en entreprise. Ensuite, le volume et le nombre de variables offrent un réel défi technique pour les méthodes vues en cours. Également, et en articulant ce module avec le module de statistiques inférentielles et de modélisation linéaire, ce jeu est propice à la résolution d’autres problématiques que je compte mettre en œuvre cet été.
+
+date: "`r Sys.Date()`"
+bibliography: sample.bib
+#linenumbers: true
+#numbersections: true
+output: 
+  bookdown::pdf_book: 
+    base_format: rticles::isba_article
+    md_extensions: -autolink_bare_uris 
+---
+
+```{r setup, include=FALSE}
+
+# Réglages généraux pour toutes les chunks
+# Le but est sortie propre, pour des tests veuillez réactiver les messages et les warnings
+
+knitr::opts_chunk$set(fig.align='left', 
+                      fig.width=5, 
+                      fig.height=4, 
+                      message=FALSE, 
+                      warning=FALSE)
+
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+# Nos boites à outils
+
+library("markdown")
+library("knitr")
+library("rmarkdown")
+library("GGally")
+library("FactoMineR")
+library("factoextra")
+library("missMDA")
+library("corrplot")
+library("FactoInvestigate")
+library("Rtsne")
+library("readxl")
+library("graphics")
+library("gplots")
+library("questionr")
+library("ExPosition")
+library("raster")
+library("rgdal")
+library("base")
+library("ggplot2")
+
+```
+
+
+# Introduction
+
+&nbsp;
+
+&nbsp;&nbsp;&nbsp;Les entreprises collectent une quantité considérable de données sur leurs clients, allant des informations de base telles que les noms et les adresses, aux habitudes d'achat, aux préférences personnelles et aux données comportementales en ligne. Les données d'utilisation des clients constituent un atout précieux pour les entreprises, car elles permettent de comprendre les préférences et les besoins de leurs clients, ce qui leur permet de personnaliser leur offre et d'améliorer leur expérience client. En outre, ces données peuvent également être utilisées pour anticiper les tendances du marché et pour prendre des décisions commerciales éclairées.
+
+&nbsp;
+
+Ces données, par leur volume et le nombre de variables considérable, deviennent vite illisibles/inexploitables, sans des méthodes adaptées pour en extraire la précieuse information. Les techniques de réduction de dimensions abordées dans notre module, font partie de notre arsenal de futurs professionnels de la data. Nous allons essayer de les appliquer à un jeu de données d’un fournisseur d’accès internet-mobile. Ce jeu de données contient initialement 100k observations, pour un total d’une centaine de variables. Nous allons pas à pas essayer de le comprendre, le traiter, et interpréter les précieuses informations qu’il recèle.
+
+&nbsp;
+
+# Présentation du jeu de données
+
+&nbsp;
+
+&nbsp;&nbsp;&nbsp;Il s'agit d'un ensemble de données contenant des informations sur les habitudes de consommation des clients d'une entreprise de télécommunications. Il y a un total de 100 000 observations (lignes) et 100 variables (colonnes). Les variables sont de types différents (float, integer, character) et sont présentées sous forme de colonnes avec des noms tels que "rev_Mean", "mou_Mean", "totmrc_Mean", etc. Les valeurs dans chaque colonne indiquent des moyennes, des totaux ou des moyennes sur des périodes spécifiques. Certaines variables concernent des informations personnelles des clients, telles que leur âge, leur revenu ou leur statut familial, tandis que d'autres variables concernent les données relatives à leur utilisation des services de télécommunications.
+
+&nbsp;
+
+Voici l'entête du set de données, dont nous allons étayer les premières colonnes dans la suite:
+
+&nbsp;
+
+```{r echo=FALSE, cache = TRUE}
+
+# Charger le jeu de données, il y a beaucoup de valeurs manquantes d'ou le paramètre (stringAsFactor=FALSE), comme astuce pour éviter que des valeurs numériques soient lues en tant que type character.
+
+data.original = read.csv("data_FAI.csv", header=TRUE, sep=",", stringsAsFactors = FALSE)
+
+# Créer une copie de travail
+
+d = data.frame(data.original)
+
+```
+
+&nbsp;
+
+```{r echo=FALSE, cahe=TRUE}
+
+# Jettons un oeil sur l'entête (head) du jeu de données
+
+d.1= d[,1:7] # pour éviter de polluer le document de sortie avec les 100 colonnes à la fois
+
+head(d.1, 6)
+
+```
+
+&nbsp;
+
+Dans ce jeu, les observations sont numérotées de 1 à 100 000, chaque observation va contenir 100 attributs, dont des données quantitatives comme :
+
+&nbsp;
+
+**rev_Mean** : Revenu mensuel moyen (montant facturé).
+
+**mou_Mean** : Nombre moyen de minutes d'utilisation mensuelle.
+
+**totmrc_Mean** : Charge mensuelle moyenne totale récurrente.
+
+**da_Mean** : Nombre moyen d'appels assistés par annuaire.
+
+**ovrmou_Mean** : Minutes moyennes d'utilisation supplémentaires.
+
+**ovrrev_Mean** : Revenu moyen supplémentaire.
+
+**vceovr_Mean** : Revenu moyen de dépassement de minutes d'appel.
+
+&nbsp;
+
+Ainsi que des données catégorielles telles que :
+
+&nbsp;
+
+**marital** : Statut matrimonial
+
+**ownrent**: Statut de propriétaire ou locataire.
+
+**dwlltype**: Type d'unité de logement.
+
+**ethnic**: Code de regroupement ethnique.
+
+&nbsp;
+
+Voici la liste complète des variables:
+
+&nbsp;
+
+'months', 'uniqsubs', 'actvsubs', 'totcalls', 'adjqty', 'avg3mou', 'avg3qty', 'avg3rev', 'rev_Mean', 'mou_Mean', 'totmrc_Mean', 'da_Mean', 'ovrmou_Mean', 'ovrrev_Mean', 'vceovr_Mean', 'datovr_Mean', 'roam_Mean', 'change_mou', 'change_rev', 'drop_vce_Mean', 'drop_dat_Mean', 'blck_vce_Mean', 'blck_dat_Mean', 'unan_vce_Mean', 'unan_dat_Mean', 'plcd_vce_Mean', 'plcd_dat_Mean', 'recv_vce_Mean', 'recv_sms_Mean', 'comp_vce_Mean', 'comp_dat_Mean', 'custcare_Mean', 'ccrndmou_Mean', 'cc_mou_Mean', 'inonemin_Mean', 'threeway_Mean', 'mou_cvce_Mean', 'mou_cdat_Mean', 'mou_rvce_Mean', 'owylis_vce_Mean', 'mouowylisv_Mean', 'iwylis_vce_Mean', 'mouiwylisv_Mean', 'peak_vce_Mean', 'peak_dat_Mean', 'mou_peav_Mean', 'mou_pead_Mean', 'opk_vce_Mean', 'opk_dat_Mean', 'mou_opkv_Mean', 'mou_opkd_Mean', 'drop_blk_Mean', 'attempt_Mean', 'complete_Mean', 'callfwdv_Mean', 'callwait_Mean', 'totmou', 'totrev', 'adjrev', 'adjmou', 'avgrev', 'avgmou', 'avgqty', 'avg6mou', 'avg6qty', 'avg6rev', 'hnd_price', 'phones', 'models', 'truck', 'rv', 'lor', 'adults', 'income', 'numbcars', 'forgntvl', 'eqpdays', 'churn', 'new_cell', 'crclscod', 'asl_flag', 'prizm_social_one', 'area', 'dualband', 'refurb_new', 'hnd_webcap', 'ownrent', 'dwlltype', 'marital', 'infobase', 'HHstatin', 'dwllsize', 'ethnic', 'kid0_2', 'kid3_5', 'kid6_10', 'kid11_15', 'kid16_17', 'creditcd'.
+ 
+ &nbsp;
+ 
+ Elles sont répertoriées avec leurs significations respectives en **Annexe I**.
+ 
+ &nbsp;
+ 
+ 
+```{r echo=FALSE,include=FALSE, cache=TRUE}
+
+# Exploration sommaire du jeu de données
+
+dim(d)
+head(d)
+tail(d)
+str(d)
+summary(d)
+
+# Détecter les colonnes non exploitatbles car peu remplies ( trop de valeurs manquantes)
+
+seuil.acceptable = 0.3
+proportion.valeurs.manquantes = colSums(is.na(d))/nrow(d)
+colonnes.peu.remplies = names(proportion.valeurs.manquantes[proportion.valeurs.manquantes > seuil.acceptable])
+colonnes.peu.remplies
+
+# Catégorielles :
+
+unique(d$infobase)
+
+
+```
+ 
+&nbsp;
+
+# Prétraitement des données : nettoyage, recodage et préparation pour l'analyse
+
+&nbsp;
+
+## Identification des colonnes n'apportant pas d'information utile à l'analyse:
+
+&nbsp;
+
+Dans notre jeu, il s'agit de la colonne 'Customer_Id' , qui attribue un numéro client à chaque usager. Bien qu'elle l'identifie de façon unique, cette valeur est extrinsèque au sujet. Dans le sens ou elle n'apporte pas d'information pertinente sur les caractéristiques ou le comportement de l'individu qu'elle identifie. Cette colonne est cépendant utile pour faire des jointures avec d'autres tables de données.
+
+&nbsp;
+
+## Identification des Colonnes inexploitables par manque de valeurs:
+
+&nbsp;
+
+Dans notre set de données initial, il existe des valeurs manquantes identifiées et portant la mention "n.a" (not available).D'après la littérature, le seuil acceptable de données manquantes peut dépendre de plusieurs facteurs tels que le type de données, la taille de l'échantillon, la méthode d'analyse et le domaine d'application. Certains chercheurs ont suggéré des seuils spécifiques pour différents types de données. Par exemple un seuil de 5% pour les données catégorielles et un seuil de 10% pour les données continues. Dans cette phase, nous retiendrons ( choix de travail) un seuil éliminatoire exigeant de 5% pour les deux types de données.
+
+&nbsp;
+ 
+Le code suivant suivant permet d'identifier les colonnes avec moins de 95% de valeurs disponibles, et de les écarter de notre dataset en cours de "preprocessing".
+
+&nbsp;
+
+```{r echo=TRUE,include=TRUE, cache=TRUE}
+
+# Définition d'un seuil de tolérance
+
+seuil.acceptable = 0.05
+
+# Identification de colonnes concernées et affichage de leurs noms
+
+proportion.valeurs.manquantes = colSums(is.na(d))/nrow(d)
+
+colonnes.peu.remplies = 
+names(proportion.valeurs.manquantes[proportion.valeurs.manquantes > seuil.acceptable])
+
+colonnes.peu.remplies
+
+# Ecartement des colonnes identifiées "pauvres" du Dataset 
+
+d.travail = subset(d, select = -c(hnd_webcap, lor, adults, income, numbcars))
+
+```
+
+&nbsp;
+ 
+Avec un seuil aussi exigeant, notre dataset initial est suffisamment de qualité pour n'avoir que 5 variables concernées. La variable "income" aurait pu être problématique à supprimer car le revenu d'un consommateur est une donnée cruciale dans un rapport commercial. Néanmoins, nous nous rendons compte que cette variable le "revenu estimé" et non "réel" du client. C'est à dire que la variable "income" est une synthèse d'autres variables disponibles sur le client, soit une raison supplémentaire de l'écarter de la phase d'analyse du moins. 
+
+&nbsp;
+
+Nous travaillerons désormais avec le dataset d.travail, épuré de cinq variables, et que nous allons affiner dans le but d'optimiser nos résultats d'analyse.
+
+&nbsp;
+
+## Recoder des modalités:
+
+&nbsp;
+
+Dans le dataset, plusieurs variables catégorielles ont une modalité chaine vide "", il n'y a pas d'information permettant de savoir s'il s'agit de données indisponibles, non saisies, ou non exprimées par le client. Nous nous contenterons pour l'instant de leur attribuer la nomenclature "inconnue", grâce au code suivant:
+```{r echo=TRUE,include=TRUE, cache=TRUE}
+# Boucle sur chaque colonne pour remplacer la valeur "" en "inconnue":
+for ( colonne in colnames(d.travail)){
+  d.travail[,colonne] = ifelse(d.travail[,colonne] == "", "inconnue", d.travail[,colonne])
+}
+
+```
+
+&nbsp;
+
+## Choisir une population représentative réduite:
+
+&nbsp;
+
+Suite à des essais de requêtes sur le dataset initial, le projet ambitieux de travailler sur les 10M de cases disponibles, s'est vite confronté aux limites de mémoire et de puissance de calcul sur mon terminal. D'ou la nécessité de choisir une méthode pour réduire le volume de données à prendre en considération dans l'analyse, sans dégrader la pertinence des resultats obtenus.
+
+&nbsp;
+
+La méthode probabiliste de l'échantillonnage aléatoire simple est retenue, avec un ratio de réduction de 1/20 :
+
+&nbsp;
+
+Sur les 100k lignes disponibles, 5000 lignes sont successivement choisies au hasard, sans remise.
+
+&nbsp;
+
+
+```{r echo=TRUE,include=TRUE, cache=TRUE}
+
+# Confection d'un échantillon représentatif des observations:
+
+set.seed(123)  # pour la reproductibilité si chunk rejouée
+
+echantillon.travail = d.travail[sample(nrow(d.travail), 5000, replace = FALSE), ]
+
+
+```
+
+
+&nbsp;
+
+La comparaison de statistiques descriptives telles que la moyenne, médiane et les quartiles des variables de l'échantillon versus le set complet, donne une idée sur leurs distributions respectives, et permet de détecter des anomalies potentielles d'échantillonnnage.
+
+&nbsp;
+
+Exemple, pour la variable **mou_Mean** nous obtenons le graphique boxplot suivant:
+
+
+&nbsp;
+
+```{r echo=FALSE, include=TRUE, cache=TRUE}
+
+# boxplot comparatif la variable "mou_mean" entre l'échantillon et le set d'origine
+
+boxplot(echantillon.travail$mou_Mean, 
+        
+        d.travail$mou_Mean, col=c("pink", "lightblue"), 
+        
+        main="mou_Mean: Comparaison echantillon versus set complet",
+        
+        names=c("échantillon", "set complet"), ylab="Valeurs", ylim=c(0,4000))
+
+
+```
+
+
+&nbsp;
+ 
+Pour la variable **rev_Mean** nous obtenons le graphique boxplot suivant:
+
+&nbsp;
+
+```{r echo=FALSE, include=TRUE, cache=TRUE}
+
+# boxplot comparatif de variable "rev_mean" entre l'échantillon et le set d'origine
+
+boxplot(echantillon.travail$rev_Mean, 
+        
+        d.travail$rev_Mean, col=c("pink", "lightblue"),
+        
+        main="rev_Mean: Comparaison echantillon vs set complet",
+        
+        names=c("échantillon", "set complet"), ylab="Valeurs", ylim = c(0,200))
+
+```
+
+&nbsp;
+ 
+La similarité de la distribution des variables entre l'échantillon et le set complet, permet de nous rassurer sur le caractère représentatif du sous-ensemble choisi. Un tirage aléatoire qui se serait mal executé nous aurait alerté par une modification significative des statistiques telles que la moyenne, la médiane et les quartiles.
+
+&nbsp;
+ 
+# Analyse des données quantitatives
+
+&nbsp;
+
+```{r echo=FALSE, include=FALSE}
+
+# Circonscrire les variables quantitatives de l'analyse dans un dataframe
+
+  ## nom du dataframe : e.t.quant , pour échantillon de travail des variables quantitatives
+
+  ## commençons par écarter le boolean "churn", variable aux valeurs (0,1), exprimant les         modalités abonnement résilié/ abonnement non résilié
+
+e.t.quant = subset(echantillon.travail, select = - churn)
+
+  ## écartons également la variable Customer_ID qui n'apporte pas d'information pour              l'analyse
+
+e.t.quant = subset(e.t.quant, select = - Customer_ID)
+
+  ## écarter les variables catégorielles ( valeurs non numériques)
+
+num_cols <- sapply(e.t.quant, is.numeric)
+
+e.t.quant <- e.t.quant[, num_cols]
+
+dim(e.t.quant)
+
+colnames(e.t.quant)
+
+```
+
+## Problématique:
+
+&nbsp;
+
+Suite au travail préliminaire d'exploration, d'élimination, et à l'échantillonnage, nous disposons à ce stade d'un set de 5000 observations représentatives et de de 95 variables.
+
+&nbsp;
+
+Nous pouvons légitimement exclure **churn** de l'analyse quantitative, car cette variable prend des valeurs numériques de 0 ou 1, mais exprime en réalité les modalité résilié ou non-résilié d'un abonnement.
+
+&nbsp;
+ 
+La variable **Customer_ID** est également inutile pour l'analyse car elle sert  juste d'attribut d'identification.
+
+&nbsp;
+
+Les variables quantitatives restantes sont au nombre de 73 ce qui est un nombre élevé, pouvant rendre coûteuse en temps et en ressources la transformation de ces données en décisions ou actions commerciales.
+
+&nbsp;
+
+Par exemple, sur un terminal avec un processeur i5 de 8ème génération et 16 gb de ram, la tentative de réaliser une régression logistique permettant de prédire la résiliation d'un abonnement avec ces 73 variables, s'est soldée par un échec: l'ordinateur rame et finit par bugger.
+
+&nbsp;
+
+Cela nous amène à la nécéssité de synthétiser l'information contenue ce dataset dans moins de variables : réduire la dimension du dataset tout en gardant un maximum d'information.
+
+&nbsp;
+
+Observons la nature du lien entre variables dans cette matrice de corrélation linéaire entre variables centrées et réduites:
+
+&nbsp;
+
+```{r echo=TRUE, include=TRUE, cache=TRUE}
+
+# Construisons un set de données centrées réduites:
+
+moyennes = apply(e.t.quant, 2, mean, na.rm=TRUE)
+
+ecarts_types_biaisés = apply(e.t.quant, 2, sd, na.rm=TRUE) * (sqrt(4999/5000))
+
+centree = sweep(e.t.quant, 2, moyennes, "-")
+
+centree_reduite = sweep(centree, 2, ecarts_types_biaisés, "/")
+
+cor = cor(centree_reduite, use="complete.obs")
+
+corrplot(cor, method = "circle")
+
+
+```
+
+&nbsp;
+
+
+L'observation des coefficients de corrélation linéaire entre les différentes variables montre des liens **linéaires** et majoritairement positifs entre beaucoup de variables. Ces variables linéairement corrélées peuvent apriori être synthétisées en variables composites moins nombreuses. C'est ce que nous allons essayer de faire avec la **PCA**, analyse en composantes principales.
+
+&nbsp;
+
+## Application d'une analyse en composantes principales aux données quantitatives:
+
+&nbsp;
+
+Nous utiliserons dans la suite, les outils mis à disposition par la librairie FActoMineR.
+
+&nbsp;
+
+### Imputation et réalisation de la PCA:
+
+&nbsp;
+
+Malgré une élimination d'emblée des variables mal renseignées, nos variables gardent entre 0 et 5% des valeurs qui ne sont pas remplies. Pour optimiser la PCA, il est nécéssaire de les **imputer**, c'est à dire les compléter avec une méthode optimisant la précision du résultat. Dans ce cas, nous excluons les imputations par la moyenne ou la médiane, qui réduisent la variance et induisent des biais. Au profit d'une imputation qui tient compte de la structure des données existantes.
+
+&nbsp;
+
+Voici les lignes de code permettant l'imputation et la réalisation de la PCA
+
+&nbsp;
+
+```{r echo = TRUE, include = TRUE, cache = TRUE}
+
+# Estimer le nombre de dimensions principales nécessaires à une bonne complétion des données manquantes
+
+resultat.estimation = estim_ncpPCA(e.t.quant, ncp.max=10) 
+
+# Imputation
+
+resultat.completion = imputePCA(e.t.quant, ncp=resultat.estimation$ncp) 
+
+# Réaliser la PCA normée sur le set de données complétées
+
+resultat.pca = PCA(resultat.completion$completeObs, scale.unit=TRUE, ncp = 10, graph = FALSE) 
+
+```
+
+&nbsp;
+
+### Choix du nombre d'axes à retenir:
+
+&nbsp;
+
+Observons les valeurs propres de chaque axe factoriel afin de déterminer ceux à retenir:
+
+&nbsp;
+
+```{r echo = FALSE, include = TRUE}
+
+fviz_eig(resultat.pca, addlabels = TRUE)
+
+
+```
+&nbsp;
+
+Le premier axe capture une grande partie de la variance de donnée, le critère du coude permet de retenir le deuxième axe également. Le critère de Kaiser retient également le deuxième axe.
+
+&nbsp;
+
+Conclusion : nous retenons le premier et le deuxième axe ce qui permettera de capturer 44.3% de la variance de nos données initiales.
+
+&nbsp;
+
+### Interprétation des Variables:
+
+&nbsp;
+
+```{r echo=FALSE, include=FALSE, eval=FALSE}
+
+# Analyse resultat variables
+
+ # Apprecions à la fois la contribution et le cos2 sur les axes choisis 
+
+ # Axe 1:
+
+coordonnees = resultat.pca$var$coord[,1]
+
+contrib     = resultat.pca$var$contrib[,1]
+
+cos2        = resultat.pca$var$cos2[,1]
+
+caracteristiques.var.axe1 = cbind(coordonnees,contrib,cos2)
+
+caracteristiques.var.axe1
+
+fviz_cos2(resultat.pca, choice="var", axe=1, top = 20) # idem contrib  
+
+
+ #Axe 2:
+
+coordonnees = resultat.pca$var$coord[,2]
+
+contrib     = resultat.pca$var$contrib[,2]
+
+cos2        = resultat.pca$var$cos2[,2]
+
+caracteristiques_var_axe2 = cbind(coordonnees,contrib,cos2)
+
+
+
+
+```
+
+&nbsp;
+
+Apprécions la contribution et le cos2 des variables dans le plan factoriel choisi:
+
+&nbsp;
+
+```{r echo=FALSE, include=TRUE}
+
+# Visualisation des cos2 et des contributions:
+
+par(mfrow=c(1,4))
+
+fviz_cos2(resultat.pca, choice="var", axe=1, top = 20)
+
+fviz_contrib(resultat.pca, choice="var", axe=1, top = 20)
+
+fviz_cos2(resultat.pca, choice="var", axe=2, top = 20)
+
+fviz_contrib(resultat.pca, choice="var", axe=2, top = 20)
+
+```
+
+&nbsp;
+
+Projetons les variables qui contribuent le plus au plan factoriel:
+
+&nbsp;
+
+```{r, echo=FALSE, include=TRUE}
+
+# Projection des variables les plus contributives:
+
+fviz_pca_var (resultat.pca, 
+              
+              select.var = list(cos2 = 0.70), 
+              
+              col.var = "contrib",
+              
+              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+              
+              title="Variables dans le plan factoriel",
+              
+              repel = TRUE)
+
+
+```
+
+&nbsp;
+
+**Sémantique des variables: 
+
+&nbsp;
+
+(L'annexe 1 donne la signification exacte de la nomenclature chaque variable.)
+
+&nbsp;
+
+les variables "avg3mou", "mou_Mean", "complete_Mean", "avg6mou", "avg_qty", "comp_vce_Mean", "attemp_Mean", "avg6qty", "plcd_vce_Mean" caractérisent le côté positif du premier axe factoriel, les individus qui seront projetés du côté positif de l'axe 1 auront des valeurs élevées sur ces variables. C'est à dire, des individus qui passent un nombre élevé d'appels, et qui auront  une durée longue de leurs communications.
+
+&nbsp;
+
+les variables "plcd_dat_Mean", "comp_dat_Mean" caractérisent le côté positif du deuxième axe factoriel, les individus qui seront projetés du côté positif de l'axe 2 auront des valeurs élevées sur ces variables. C'est à dire , des individus qui tentent, en réussissant ou pas, d'utiliser l'internet du mobile. 
+
+&nbsp;
+
+La PCA actuelle ne permet pas de caractériser significativement les côtés négatifs de ces deux axes. Ceci est certainement un indicateur d'une performance non optimale sur ce dataset.
+
+&nbsp;
+
+### Interprétation des individus:
+
+```{r echo=FALSE, include=FALSE }
+
+# Analyse resultat individus
+
+ # Apprecions à la fois la contribution et le cos2 sur les axes choisis 
+
+  # Axe 1:
+
+coordonnees = resultat.pca$ind$coord[,1]
+
+contrib     = resultat.pca$ind$contrib[,1]
+
+cos2        = resultat.pca$ind$cos2[,1]
+
+caracteristiques.ind.axe1 = cbind(coordonnees,contrib,cos2)
+
+caracteristiques.ind.axe1
+
+fviz_cos2(resultat.pca, choice="var", axe=1, top = 20) # idem contrib  
+
+ #Axe 2:
+
+coordonnees = resultat.pca$ind$coord[,2]
+
+contrib     = resultat.pca$ind$contrib[,2]
+
+cos2        = resultat.pca$ind$cos2[,2]
+
+caracteristiques_ind_axe2 = cbind(coordonnees,contrib,cos2)
+
+
+```
+
+&nbsp;
+
+Apprécions la contribution et le cos2 des individus dans le plan factoriel choisi :
+
+&nbsp;
+
+```{r echo=FALSE, include=TRUE}
+
+# Visualisation des cos2 et des contributions des individus:
+
+par(mfrow=c(1,4))
+
+fviz_cos2(resultat.pca, choice="ind",  axe=1, top = 20)
+
+fviz_contrib(resultat.pca, choice="ind", axe=1, top = 20)
+
+fviz_cos2(resultat.pca, choice="ind", axe=2, top = 20)
+
+fviz_contrib(resultat.pca, choice="ind", axe=2, top = 20)
+
+```
+
+&nbsp;
+
+ Projetons les individus qui contribuent le plus au plan factoriel:
+
+&nbsp;
+
+```{r echo=FALSE, include=TRUE, cache=TRUE}
+
+# Projection des individus au cos2 le plus élevé avec indication de leurs contributions
+
+fviz_pca_ind (resultat.pca, 
+              
+              select.ind = list(cos2 = 0.6), 
+              
+              col.ind = "contrib",
+              
+              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+              
+              title="Individus dans le plan factoriel",
+              
+              repel = TRUE)
+
+
+```
+
+**Sémantique des individus:
+
+&nbsp;
+
+ Des individus comme "40136", "21377", "46129", "88317" et "23331" caractérisent le côté positif du premier axe factoriel, ces individus ont des valeurs élevées en "avg3mou", "mou_Mean", "complete_Mean", "avg6mou", "avg_qty", "comp_vce_Mean", "attemp_Mean", "avg6qty" et "plcd_vce_Mean".
+ 
+&nbsp;
+ 
+ Des individus comme "96084", "93970", "56753", "12144" caractérisent le côté positif du deuxième axe factoriel, ces individus ont des valeurs élevées en "plcd_dat_Mean" et "comp_dat_Mean".
+ 
+&nbsp;
+ 
+ Des individus comme "42611", "31911", "43650" et "40744" sont bien projetés du coté négatif du premier axe factoriel mais sans avoir suffisamment de contribution pour pouvoir le caractériser.
+ 
+&nbsp;
+
+**Observation générale** : il est à remarquer que suite à ce premier essai de reduction de dimensionnalité, la projection des individus dans le plan factoriel laisse apparaitre des zones de nuage d'observations denses et bien projetées. Nous pouvons émettre l'hypothèse qu'ils s'agisse d'individus à profil similaire. Dans la suite, la technique T-sne sera utilisée pour essayer de confirmer cette hypothèse.
+
+&nbsp;
+
+## Mise en pratique de T-SNE, pour visualiser des similarités entre observations:
+
+&nbsp;
+
+Ce qui suit, répond à une problématique du type : visualiser la proximité entre individus dans un espace réduit, détecter potentiellement des clusters (de profil de consommation par exemple).
+
+&nbsp;
+
+L'algorithme T-sne est appliqué aux données centrées réduites, successivement, en jouant sur les hyper-paramètres : perplexité, pas d'apprentissage (learning rate) et nombre maximal d'itérations.
+
+&nbsp;
+
+Nous obtenons respectivement les graphiques suivants:
+
+&nbsp;
+```{r echo = FALSE, include=TRUE, cache=TRUE}
+
+# Mise en marche de l'algo T-sne en modulant les hyper-paramètres
+
+d = resultat.completion$completeObs # travail sur les données colplétées dans la phase PCA
+
+tsne0 = Rtsne(d , dims = 2,pca_scale = TRUE, perplexity=5, max_iter = 300)
+
+tsne1 = Rtsne(d , dims = 2,pca_scale = TRUE, perplexity=10, max_iter = 500)
+
+tsne2 = Rtsne(d , dims = 2,pca_scale = TRUE, perplexity=15, max_iter = 1000)
+
+tsne3 = Rtsne(d , dims = 2,pca_scale = TRUE, perplexity=20, max_iter = 1500)
+
+tsne4 = Rtsne(d , dims = 2,pca_scale = TRUE, perplexity=25, max_iter = 2000)
+
+tsne5 = Rtsne(d , dims = 2,pca_scale = TRUE, eta = 100, perplexity=50, max_iter = 2000)
+
+tsne6 = Rtsne(d , dims = 2,pca_scale = TRUE, eta = 50, perplexity=100, max_iter = 2000)
+
+# Graphiques respectifs:
+
+plot(tsne1$Y, main="perplexité = 10, max_Iter = 500")
+
+plot(tsne2$Y, main="perplexité = 15, max_Iter = 1000")
+
+plot(tsne3$Y, main="perplexité = 20, max_Iter = 1500")
+
+plot(tsne4$Y, main="perplexité = 25, max_Iter = 2000")
+
+plot(tsne5$Y, main="perplexité = 50, learning rate = 100 max_Iter= 2000")
+
+plot(tsne6$Y, main="perplexité = 100, learning rate = 50,  max_Iter = 2000")
+
+```
+
+&nbsp;
+
+Les graphiques montrent une ségmentation qui devient plus nette en augmentatnt la perplexité et en diminuant le pas d'apprentissage.
+
+&nbsp;
+
+Nous pouvons affecter un numéro à chaque segment, et enrichir le dataset d'une nouvelle colonne spécifiant le cluster de chaque observation:
+
+&nbsp;
+
+```{r echo = TRUE, include=TRUE}
+
+# Utiliser l'algorithme kmeans pour départager les observations entre groupes ( choix graphiquement orienté de 4 groupes)
+
+kmeans.result = kmeans(tsne6$Y, centers=4)
+
+colonne.groupe = as.data.frame(kmeans.result$cluster)
+
+colnames(colonne.groupe) = "Groupe"
+
+data.groupe = cbind(d, colonne.groupe)
+
+table(data.groupe$Groupe)
+
+
+
+
+```
+
+&nbsp;
+
+# Analyse des données catégorielles
+ 
+ Dans la suite nous nous intérressons aux données catégorielles. L'échantillon représentatif des données est enrichie de la colonne "Groupe" récupérée précédemment. Notre dataframe est désormais composé de 5000 observations et de 22 variables catégorielles.
+ 
+&nbsp;
+ 
+```{r echo=FALSE, include=TRUE, cache=TRUE}
+
+# Récupérer l'échantillon représentatif des données catégorielles:
+
+e.t.cat = subset(echantillon.travail, 
+                 select=c('new_cell', 'crclscod', 'asl_flag', 'prizm_social_one', 'area', 'dualband', 'refurb_new', 'ownrent', 'dwlltype', 'marital', 'infobase', 'HHstatin', 'dwllsize', 'ethnic', 'kid0_2', 'kid3_5', 'kid6_10', 'kid11_15', 'kid16_17', 'creditcd','churn'))
+
+# Rajouter la colonne Groupe obtenu avec T-sne
+
+e.t.cat = cbind(e.t.cat, colonne.groupe)
+
+# Entête données catégorielles
+
+head(e.t.cat)
+
+
+```
+ 
+&nbsp;
+ 
+## AFC entre "churn" et "new_cell":
+ 
+&nbsp;
+ 
+ La variable **churn** prend les valeurs 1 et o, respectivement pour l'état 1 d'avoir résilié dans les deux mois suivant l'observation, et l'état 0 d'être toujours abonné sur le même intervalle de temps.
+ 
+&nbsp;
+  
+La variable **new_cell** quant à elle,  indique si'utilisateur dispose d'un nouveau téléphone avec les initiales de "Yes", "No" et "Unknown".
+
+&nbsp;
+
+Après Construction du tableau de contingence entre les deux variable, la répartition des modalités est visible sur la figure suivante:
+
+&nbsp;
+
+```{r echo=FALSE, include=TRUE, cache=TRUE}
+
+# transformer valeurs des deux variables,en factor, ordonner les levels, contruire tab contingence
+
+
+e.t.cat$churn = as.factor(e.t.cat$churn) 
+
+e.t.cat$churn = factor(e.t.cat$churn , levels = c("0", "1"))
+
+e.t.cat$new_cell = as.factor(e.t.cat$new_cell) 
+
+e.t.cat$new_cell = factor(e.t.cat$new_cell , levels = c("Y", "N", "U"))
+
+
+# tableau de contingence et visualisation
+
+contingence1 = table(e.t.cat$churn, e.t.cat$new_cell) 
+
+balloonplot(t (contingence1), 
+            
+            main = "balloonplot tab. contingence chrn/new_cell ", 
+            
+            xlab = "modalités new_cell", 
+            
+            ylab = "modalités churn",
+            
+            label = FALSE, 
+            
+            show.margins = FALSE)
+
+```
+
+&nbsp;
+ 
+ Cette figure nous donne une indication visuelle : les individus ayant une modalité de la variable **new_cell** semblent être répartis de façon égale sur les deux modalités de la variable **churn**.
+ 
+&nbsp;
+
+L'hypothèse H0 que les deux variables soient indépendantes peut être formulée. Un Test du chi squared avec cette hypothèse est réalisé:
+
+&nbsp;
+
+```{r echo=FALSE, include=TRUE}
+
+chisq.test(contingence1)
+
+```
+
+&nbsp;
+
+La p_value de ce test est de 0.62, l'hypothèse H0 ne peut être rejetée dans ces conditions. Nous ne pouvons rejeter l'hypothèse de l'indépendance de ces deux variables.
+
+&nbsp;
+
+Les variables **churn** et **new_cell** peuvent être considérée comme indépendantes (avec un risque beta de second espèce de nous tromper).
+
+&nbsp;
+
+## AFC entre "ownrent" et "ethnic":
+
+&nbsp;
+
+(Il est à préciser qu'avant de se tourner vers ce couple facile, plusieurs autres combinaisons de variables plus utiles ont été testées et se sont malheureusement montrées pas concluantes. En particulier la paire Group-churn dont l'indépencance n'a pu être rejetée par le chisq test, et la paire churn-ethnic qui était bel et bien dépendante mais qui posait un problème de dimension lors du plottage).
+
+&nbsp;
+ 
+ La variable **ownrent** prend les valeurs "O","R" et "inconnue", respectivement pour l'état de  "propriétaire", "locataire" ou "situation inconnue".
+ 
+&nbsp;
+  
+La variable **ethnic** quant à elle,  permet d'attribuer un groupe éthnique au client, représenté par 17 lettres. Trois modalités de cette variable sont exclues car trop rare. Une modalité supplémentaire est la valeur "inconnue".
+
+&nbsp;
+
+Après Construction du tableau de contingence entre les deux variable, la répartition des modalités est visible sur la figure suivante:
+
+&nbsp;
+
+```{r echo=FALSE, include=TRUE, cache=TRUE}
+
+# transformer valeurs des deux variables,en factor, ordonner les levels, contruire tab.        contingence
+
+e.t.cat$ownrent = as.factor(e.t.cat$ownrent) 
+
+e.t.cat$ownrent = factor(e.t.cat$ownrent , 
+                         levels = c("inconnue", "O", "R"))
+
+e.t.cat$ethnic = as.factor(e.t.cat$ethnic) 
+
+e.t.cat$ethnic = factor(e.t.cat$ethnic , 
+                        levels = c("inconnue", "O", "S", "N","H","U","F","J","Z","C","G", "D","I","B","M","P","R","X"))
+
+
+# tableau de contingence et visualisation
+
+contingence2 = table(e.t.cat$ownrent, 
+                     e.t.cat$ethnic, 
+                     exclude=c("X","C", "M")) 
+
+mosaicplot(contingence2, 
+           shade = TRUE, 
+           main = "Contingence ethnic-ownrent",
+           las=2)
+
+```
+
+&nbsp;
+
+la distribution des modalités des deux variables semble indiquer une corrélation. Appliquons le test du chisq avec l'hypothèse H0 que le les deux variables soient indépendantes:
+
+&nbsp;
+
+```{r echo=FALSE, include=TRUE, warning=FALSE, cache=TRUE}
+
+chisq.test(contingence2)
+
+```
+
+&nbsp;
+
+L'hypothèse d'indépendance des variables **churn** et **ethnic** est rejeté avec une p_value extrêmement faible de 2.2e-16.
+
+&nbsp;
+
+Ces deux variables peuvent être considérées comme dépendantes avec un risque quasi nul de nous tromper.
+
+&nbsp;
+
+Après avoir appliqué une analyse factorielle des correspondances, visualisons l'inertie des valeurs propres:
+
+&nbsp;
+
+
+```{r echo=FALSE, include=TRUE, cache=TRUE}
+
+# AFC et visualistion de l'inertie
+resultat.AFC = CA(contingence2, graph=FALSE)
+fviz_eig(resultat.AFC, addlabels = TRUE, ylim = c(0, 100))
+
+
+```
+
+&nbsp;
+
+Les 2 premiers axes de l' analyse expriment **100%** de l'inertie totale du jeu de données ; cela signifie que 100% de la variabilité totale du nuage des lignes (ou des colonnes) est représentée dans ce plan. ( Ce résultat était prévisible car max(valeurs propres) = min((p-1), (n-1)))
+
+&nbsp; 
+
+Le premier axe factoriel est largement prépondérant : il explique a lui seul 91.14% de la variance totale des données.
+
+&nbsp; 
+
+La variance expliquée par le premier axe peut suffire pour le choisir comme unique axe dans la réduction de dimension, nous choisirons néanmoins de garder graphiquement le deuxième axe pour des raisons de visibilité.
+
+&nbsp;
+
+Visualisation de profils lignes:
+
+```{r echo=FALSE, include=TRUE, cache=TRUE}
+
+# Graphique des profils lignes:
+
+fviz_ca_row(resultat.AFC, 
+            
+            col.row = "contrib",
+            
+            title ="Profils lignes selon leur contribution",
+            
+            gradient.cols = c ("#00AFBB", "#E7B800", "#FC4E07"),
+            
+            repel = TRUE)
+
+```
+
+&nbsp;
+
+Le profil des "O" ( propriétaire de logement) caractérise le côté négatif du premier axe factoriel,  par opposition au profil des "inconnue" (état inconnu de la proprieté) qui caractérise le côté positif du premier axe factoriel.
+
+&nbsp;
+
+Le profil des "R" ( locataires)  est bien projeté sur le deuxième axe mais avec une faible contribution.
+
+&nbsp;
+
+Les profils "O" et "inconnue" ne partageront pas le même type type de modalités "ethnic"
+
+&nbsp;
+
+Visualisation de profils colonnes:
+
+&nbsp;
+
+```{r echo=FALSE, include=TRUE, cache=TRUE}
+
+# Graphique des profils colonnes:
+
+fviz_ca_col(resultat.AFC, col.col = "contrib",
+            
+            title ="Profils colonnes selon leur contribution",
+            
+            gradient.cols = c ("#00AFBB", "#E7B800", "#FC4E07"),
+            
+            repel = TRUE)
+
+```
+
+&nbsp;
+
+Le profil des "inconnue" ( pas d'étiquette éthnique ) caractérise le côté positif du premier axe factoriel.
+
+&nbsp;
+
+Projection simultanée des profils lignes et profils colonnes:
+
+&nbsp;
+
+```{r echo=FALSE, include=TRUE, cache=TRUE}
+
+# projection simultanée profils lignes et profils colonnes
+
+fviz_ca_biplot(resultat.AFC)
+
+```
+
+&nbsp;
+
+## Analyse des correspondances multiples:
+
+Dans la suite, une analyse des correspondances multiples est appliquée aux variables :
+
+&nbsp;
+
+'new_cell', 'crclscod', 'asl_flag', 'prizm_social_one', 'area', 'dualband', 'refurb_new', 'ownrent', 'dwlltype', 'marital', 'infobase', 'HHstatin', 'dwllsize', 'ethnic', 'kid0_2', 'kid3_5', 'kid6_10', 'kid11_15', 'kid16_17', 'creditcd'
+
+soient toutes les variables catégorielles, sauf "churn" et "Group".
+
+
+&nbsp;
+
+Suite à l'analyse, la figure suivante permet de visualiser les valeurs propres calculées pour chaque axe factoriel:
+
+&nbsp;
+
+
+```{r echo=FALSE, include=TRUE, cache=TRUE}
+
+# Récupération des colonnes à analyser (échantillon travail ACM)
+
+e.t.ACM = e.t.cat[, 1:20]
+
+# Réalisation de l'ACM et visualisation des valeurs propres
+
+resultat.ACM = MCA(e.t.ACM,  graph=FALSE)
+
+valeurs.propres = resultat.ACM$eig[,1]
+barplot(valeurs.propres, main="Valeur propres",names.arg=1:nrow(resultat.ACM$eig)) 
+abline(h=1/20,col=2,lwd=2)
+dim(resultat.ACM$eig)
+
+```
+
+&nbsp;
+
+La ligne rouge y=0.05 représente la moyenne des valeurs propres ( 1/s).
+
+&nbsp;
+
+Les valeurs propres sont très nombreuses, au nombre de 133 ( p - s ).
+
+&nbsp;
+
+Ce résultat n'est pas satisfaisant car il ne permet pas d'isoler des valeurs propres significatives.
+
+&nbsp;
+
+Nous procédons à une correction de Benzécri afin de limiter les biais dus à la fréquence des modalités.
+
+&nbsp;
+
+La figure suivante permet de visualiser les valeurs propres après correction:
+
+&nbsp;
+
+```{r echo = FALSE, include=TRUE, cache=TRUE}
+
+# correction de Benzécri et visualisation
+
+resultat.corrige = epMCA(e.t.ACM , 
+                         
+                         graph = FALSE,
+                         
+                         correction = "b") 
+
+fviz_eig (resultat.corrige, 
+          
+          addlabels=TRUE,
+          
+          ylim=c(0,100)) 
+
+```
+
+&nbsp;
+
+Cette correction était bel et bien fructive, puisqu'elle nous permet désormais d'isoler les deux premiers axes factoriels, qui captent à eux seuls 93% de la variance.
+
+&nbsp;
+
+Le résultat de cette correction sera utilisé dans la suite pour la construction des graphes et la détermination des contributions des modalités et individus dans la construction des axes.
+
+&nbsp;
+
+**Analysons le résultat des modalités:**
+
+&nbsp;
+
+```{r echo = FALSE, include=TRUE, cache=TRUE}
+
+
+## axe 1
+
+var = get_mca_var(resultat.corrige)
+
+coord= var$coord[,1]
+
+contrib= var$contrib[,1]
+
+cos2 = var$cos2[,1]
+
+caracteristiques.modalites.axe1= cbind(coord,contrib,cos2)
+
+## axe 2
+
+var = get_mca_var(resultat.corrige)
+
+coord= var$coord[,2]
+
+contrib= var$contrib[,2]
+
+cos2 = var$cos2[,2]
+
+caracteristiques.modalites.axe2= cbind(coord,contrib,cos2)
+
+
+## Modalités:
+
+fviz_mca_var(resultat.corrige, 
+             
+             col.var = "contrib", 
+             
+             select.var = list(cos2 = 0.5),
+             
+             gradient.cols = c ("#00AFBB", "#E7B800", "#FC4E07"),
+             
+             title="Modalités dans le 1er plan factoriel",
+             
+             repel = TRUE)
+
+```
+
+
+&nbsp;
+
+**AXE 1 :**
+
+&nbsp;
+
+Le côté négatif de la première dimension est caractérisé par clients ayant les modalités : "marital.inconnue", "ethnic.inconnue", "kid0_2.inconnue", "kid3_5.inconnue", "kid6_10.inconnue", "kid11_15.inconnue", "kid16_17.inconnue", "creditcd.inconnue" et "crclscod.J".
+
+&nbsp;
+
+L'analyse des cos2 et contributions ne permet pas de déterminer de façon significative des modalités caractérisant le côté positif du premier axe factoriel.
+
+&nbsp;
+
+**AXE 2 :**
+
+&nbsp;
+
+Le côté négatif de l'axe 2 est caractérisé par des clients ayant les modalités: "dwllsize.A", "dwlltype.S", "ownrent.O", "marital.M" et "creditcd.Y".
+
+&nbsp;
+
+Le côté positif de l'axe 2 est caractérisé par des clients ayant les modalités: "creditcd.N", "infobase.inconnue", "ownrent.inconnue", "dwllsize.inconnue", "dwlltype.inconnue" et "marital.U".
+
+&nbsp;
+
+**Analysons le résultat des Individus:**
+
+&nbsp;
+
+```{r echo = FALSE, include=TRUE, cache=TRUE}
+
+
+
+## axe 1
+
+ind = get_mca_ind(resultat.corrige)
+
+coord= ind$coord[,1]
+
+contrib= ind$contrib[,1]
+
+cos2 = ind$cos2[,1]
+
+caracteristiques.individus.axe1= cbind(coord,contrib,cos2)
+
+## axe 2
+
+ind = get_mca_ind(resultat.corrige)
+
+coord= ind$coord[,2]
+
+contrib= ind$contrib[,2]
+
+cos2 = ind$cos2[,2]
+
+caracteristiques.individus.axe2= cbind(coord,contrib,cos2)
+
+
+## Projection Individus:
+
+fviz_mca_ind(resultat.corrige, 
+             
+             col.ind = "contrib", 
+             
+             select.ind = list(cos2 = 0.7),
+             
+             gradient.cols = c ("#00AFBB", "#E7B800", "#FC4E07"),
+             
+             title="Individus dans le 1er plan factoriel",
+             
+             repel = TRUE)
+
+```
+
+
+&nbsp;
+
+**AXE 1 :**
+
+&nbsp;
+
+Le côté négatif de la première dimension est caractérisé par les individus : 42611, 31911, 43650, 40744, 45566, 58263, 36345, 30455, 67719, 55247, 41538, 35533, 46415, 32463, 40160, 45711.
+
+&nbsp;
+
+L'analyse des cos2 et contributions ne permet pas de déterminer de façon significative des individus caractérisant le côté positif du premier axe factoriel.
+
+&nbsp;
+
+**AXE 2 :**
+
+&nbsp;
+
+Le côté positif de l'axe 2 est caractérisé par les individus: 91895, 56753, 93970, 54525, 78186, 96084.
+
+&nbsp;
+
+Le critère conjoint du cos2 et de la contribution ne permettent pas d'identifier de façon indiscutable des individus caractérisant le côté négatif du deuxième axe factoriel.
+
+&nbsp;
+
+**Projection simultanée des individus et modalités:
+
+&nbsp;
+
+```{r echo=FALSE, include=TRUE, cache=TRUE}
+
+fviz_mca_biplot (resultat.corrige, 
+                 
+                 select.ind = list(cos2 = 75), 
+                 
+                 col.var="green",col.ind = "contrib",
+                 
+                 title="Projection simultanée",
+                 
+                 gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+                 
+                 repel =TRUE)
+
+```
+
+&nbsp;
+
+# Conclusion:
+
+&nbsp;
+
+Nous disposons d'un set de données de qualité. dans cette entreprise, un soin a été apporté à collecter un nombre élevé de caractéristiques chez le client, avec une quantité de valeurs manquantes qui reste relativement faible par rapport à la taille totale du jeu et les normes en vigueur.
+
+&nbsp;
+
+Le travail sur un jeu de données aussi important, cent milles observations sur cent variables différentes, soient dix millions de cases remplies, rencontre des limites techniques de mémoire et de rapidité de calcul sur un matériel grand public. Et nécéssite par conséquent de faire appel à une méthode fiable de réduction du volume d'observations à traiter, dans notre cas un échantillonnage aléatoire réduisant par vingt le nombre de lignes retenues pour l'analyse.
+
+&nbsp;
+
+Réaliser un modèle prédictif, pour anticiper certains comportements du client ( exemple : résiliation d'un abonnement),est l'un des enjeux de l'analyse de ces données. Néanmoins, modéliser avec toutes les variables nuit à la qualité du modèle. D'une part en augmentant le coût de la requête en ressources. D'autre part en diminuant la lisibilité de l'information extraite. La **PCA** nous aide à remédier à ce désagrément en réduisant drastiquement le nombre de dimensions à considérer, grâce à la synthèse de peu de composantes principales non corrélées à partir d'un grand nombre de variables corrélées. Dans notre cas, l'analyse en composantes principales de nos données quantitatives a permis de dégager un premier plan factoriel captant 44.3 % de la variance. Dans ce premier plan factoriel, le premier axe est positivement caractérisé par neuf variables très corrélées, qui sont des moyennes du nombre d'appels ou des durées d'appel sur différents intervalles de temps. Le deuxième axe est quand à lui positivement caractérisé par le nombre d'accès au service internet de l'abonnement.
+
+&nbsp;
+
+Essayer de dégager des profils type chez les clients est également un enjeu majeur pour l'entreprise. Segmenter les clients en fonction de leurs modes de consommation permet de cibler les offres commerciales entre autres, ce qui permet de limiter le coût d'une campagne tout en gagnant en efficacité. L'algorithme **T-SNE** a été appliqué aux données quantitatives, afin de déceler une proximité entre individus dans un espace réduit. Différents essais avec des réglages différents des hyper-paramètres, montrent un tropisme des observations à s'agglutiner en petit îlots. En particulier, un réglage avec un petit pas d'apprentissage et une grande valeur de la perplexity et du maximum d'itérations, permet de visualiser graphiquement, dans un espace à deux dimensions, la différenciation des coordonnées des individus en 4 clusters au moins. L'application de l'algorithme **Kmeans** a permis ensuite d'affecter un numéro de groupe à chaque cluster. Cette donnée est ajoutée au set d'analyse sous forme d'une nouvelle colonne appelée "Group". Deux individus appartenant au même groupe sont censés partager des caractéristiques communes, reflétant un comportement ou des préférences similaires.
+
+&nbsp;
+
+L'analyse des données qualitatives, a permis initialement de s'apercevoir que le fait de posséder un nouveau terminal n'influençait pas le fait de se désabonner chez un client.
+
+&nbsp;
+
+Une analyse factorielle des correspondances (**AFC**) a été initiée avec la nouvelle variable "Group" et la variable "churn". l'hypothèse de l'indépendance de ces deux variables n'a pu être rejetée avec un seuil de significativité de 5%. Elle aurait pu l'être avec un seuil de 6% mais le choix a été fait d'avorter l'analyse. Ce manque de significativité dans le lien entre ces deux variables pourrait être interpreté par le fait que tous les groupes se comportent de façon identique par rapport au désabonnement (le churn). Mais il est plus probable, qu'un set de données plus nettoyé (exemple: supprimer les valeurs"inconnue"), et un meilleur affinage des hyper-paramètres avec **T-SNE**, nous auraient permis de segmenter de façon plus juste les individus, et nous auraient ainsi permis de rejeter fermement l'hypothèse de l'indépendance entre ces deux variables.
+
+&nbsp;
+
+L'analyse des correspondances multiples (**ACM**) a permis quant à elle de dégager un premier plan factoriel captant à lui seul  93 % de la variance, avec un premier axe prépondérant ayant capté plus de 70 % de la variance. Les modalités "inconnue" de 9 variables caractérisent négativement le premier axe. Cette valeur "inconnue" est une valeur qui a été recodée en remplacement d'une chaine vide en phase de prétraitement, car l'hypothèse de travail initiale était que les vraies valeurs manquantes (missing values) avaient pour valeur n.a. Il peut être judicieux de changer d'hypothèse de travail et de considérer la valeur "inconnue" comme faisant partie de la data manquante, et de lui appliquer les prétraitements nécéssaires pour une nouvelle analyse.
+
+&nbsp;
+
+Ces différentes analyses ont été l'occasion de confronter des difficultés pratiques et de se familiariser avec un jeu de données riche. Ce dernier se prête à différentes autres formes d'analyse. La suite envisagée pour cet agréable travail, est de le réaffiner et de l'enrichir, en mettant en application des techniques de **modélisation linéaire**. 
+
+&nbsp;
+
+
+
+
+
+# References {#references .unnumbered}
+
+ \citet{Analyse}, \citet*{Extraction}
+
+
+

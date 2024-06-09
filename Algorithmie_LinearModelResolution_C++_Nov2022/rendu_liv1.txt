@@ -1,0 +1,30 @@
+
+ Hello Mr Duhalde,
+
+
+ I thought it would be useful to add some indications, in order to make the project easier to handle:
+
+
+ The project is composed of five source files and a Makefile:
+
+  - Matrix.cpp , Matrix.h : for the matrix class.
+
+  - LinearSystem.cpp , LinearSystem.h : a class allowing abstraction of the equation A*X =B,
+    an instance of this class has A and B as private attributes,
+    and allows to find X thanks to a method called "solution()".
+
+  - main.cpp : tests and validations, step by step, of the elaborated solutions.
+    I took care to add headers and explanations in the output display, so that readability and partitioning are preserved.
+
+  - Makefile: a simple targets and reciepes definitions, as seen in CM. Get into the right folder,
+    command "make main" to compile ( executable is named main, ./main to launch execution ).
+
+ The project has been tested on Linux and Windows environments. It works well.
+ If any impredictible error occurs, please contact me.
+
+ As you may have noticed, I use English to write and comment my code. This seems to be the 
+ norm in the code world, and  it helps me to become more professional.
+ 
+ Think you very much.
+ 
+ Mehdi Mansour

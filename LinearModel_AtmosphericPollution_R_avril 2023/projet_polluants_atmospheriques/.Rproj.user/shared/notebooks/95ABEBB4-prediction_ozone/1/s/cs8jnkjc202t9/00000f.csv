@@ -1,0 +1,3 @@
+"0","plot(ozone_observation, type=""l"", col=""blue"", "
+"0","     xlab=""du 01/01/2023 au 01/04/2023"","
+"0","     ylab=""Ozone observé vs ozone prédit"")"

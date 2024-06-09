@@ -1,0 +1,7 @@
+"0","    # obtention de l'influence de chaque observation sur l'ajustement"
+"0",""
+"0","    mesures_leviers = hatvalues(lmod_2)"
+"0",""
+"0","    # plotter le quantile normal théorique de la mesure"
+"0",""
+"0","    halfnorm(mesures_leviers, ylab= ""leviers"")"

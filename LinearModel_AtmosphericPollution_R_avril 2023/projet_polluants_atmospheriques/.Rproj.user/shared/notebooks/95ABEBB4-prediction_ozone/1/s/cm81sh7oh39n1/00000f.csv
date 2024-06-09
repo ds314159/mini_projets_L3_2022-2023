@@ -1,0 +1,8 @@
+"0","ozone_observation = testing.set[,2]"
+"0","ozone_prediction = data.frame(predict.lm(final_model, testing.set))"
+"0","par(mfrow=c(1,2))"
+"0","stat1=summary(ozone_observation)"
+"0","stat2=summary(ozone_prediction)"
+"0","stat = cbind(stat1, stat2)"
+"0","colnames(stat)= c(""ozone observé"", ""ozone prédit"")"
+"0","kable(stat)"

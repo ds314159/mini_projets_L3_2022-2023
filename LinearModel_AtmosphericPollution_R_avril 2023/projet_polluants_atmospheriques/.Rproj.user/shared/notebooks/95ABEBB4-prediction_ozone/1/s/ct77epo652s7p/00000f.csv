@@ -1,0 +1,7 @@
+"0","nrows.training = floor(0.8 * nrow(data))"
+"0",""
+"0","training.indices = sample(seq_len(nrow(data)), size = nrows.training)"
+"0",""
+"0","training.set = data[training.indices, ]"
+"0",""
+"0","testing.set  = data[-training.indices, ]"

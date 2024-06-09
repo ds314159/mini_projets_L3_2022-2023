@@ -1,0 +1,2 @@
+"0","data = data %>% dplyr::mutate(weekday = weekdays(datetime))"
+"0",""

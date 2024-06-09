@@ -1,0 +1,32 @@
+{
+    "id": "DA310769",
+    "path": "C:/Users/Mehdi/Desktop/projet_ml_Mehdi_Mansour/prediction_ozone.qmd",
+    "project_path": "prediction_ozone.qmd",
+    "type": "quarto_markdown",
+    "hash": "490029336",
+    "contents": "",
+    "dirty": false,
+    "created": 1682673494138.0,
+    "source_on_save": false,
+    "relative_order": 1,
+    "properties": {
+        "rmdVisualMode": "true",
+        "rmdVisualWrapConfigured": "true",
+        "source_window_id": "",
+        "Source": "Source",
+        "rmdVisualCollapsedChunks": "",
+        "rmdVisualModeLocation": "765:727.272705078125",
+        "docOutlineVisible": "1",
+        "cursorPosition": "904,0",
+        "scrollLine": "0",
+        "docOutlineSize": "276"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1682689575,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1682689576033,
+    "read_only": false,
+    "read_only_alternatives": []
+}

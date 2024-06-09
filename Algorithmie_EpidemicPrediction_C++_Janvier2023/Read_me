@@ -1,0 +1,48 @@
+
+
+
+                                             Epidemics modelisation, approximation in C++
+                                                             and plotting
+                                                             
+                                                             
+
+
+Files included:
+
+- 9 source files in C++ language: 4 epidemic models, each having an .h file and a .cpp file, as well as a main.cpp file allowing testing of the different classes.
+
+- A folder containing Eigen library : I chose Eigen, a library I discovered when we were doing matrix decompositions, because it is simple and fast.
+
+- a jupyter notebook file "Plotting_Epidemic_Models" : it was the safest solution to avoid any compatibility problem with your installation.
+
+- Makefile
+
+
+
+Compile and run :
+
+- go to the project directory.
+
+- Command "make" in the terminal : the executable produced is called main.
+
+
+
+Functional tests :
+
+- In the main.cpp: each epidemic model is tested in a separate compartment. Each model test produces a data matrix which is stored as a csv file in the working directory.
+
+
+
+- Data Plotting : if you have jupyter notebook, launch the execution of the file "Plotting_Epidemic_Models.
+                  otherwise : copy and paste file's python instructions to your python application.
+
+
+
+The project has been tested on Linux and Windows environments. It works well.
+ If any impredictible error occurs, please contact me.
+ 
+ 
+ 
+ Thank you for this exciting first semester.
+ 
+ Mehdi Mansour
